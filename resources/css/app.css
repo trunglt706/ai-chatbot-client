@@ -1,0 +1,8 @@
+@import url("../../node_modules/bootstrap/dist/css/bootstrap.min.css");
+@import url("tailwindcss/base.css"); /* Nếu bạn vẫn giữ Tailwind */
+@import url("tailwindcss/components.css");
+@import url("tailwindcss/utilities.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
