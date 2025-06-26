@@ -144,5 +144,20 @@
     "Or": "Hoặc",
     "Last Updated At": "Cập nhật lần cuối",
     "Created At": "Ngày đăng ký",
-    "User Code": "Mã người dùng"
+    "User Code": "Mã người dùng",
+    "Verify Account At": "Kích hoạt tài khoản lúc",
+    "Social Accounts": "Tài khoản liên kết",
+    "Email Verified": "Tài khoản đã được xác minh",
+    "Blocked Account": "Khóa tài khoản",
+    "created": "đã tạo",
+    "updated": "đã cập nhật",
+    "deleted": "đã xóa",
+    "changed": "đã thay đổi",
+    "by": "bởi",
+    "set": "thiết lập",
+    "from": "từ",
+    "to": "đến",
+    "No data.": "Không có dữ liệu.",
+    "Edit Sponsor": "Cập nhật nhà tài trợ",
+    "Add New Sponsor": "Thêm mới nhà tài trợ"
 }

@@ -40,9 +40,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {{ __('Phân loại yêu cầu') }} <span class="text-red-500">*</span>
-                            </label>
+                            <x-input-label required for="type" :value="__('Request Form Type')" />
                             <select name="type" id="type" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm"
                                 onchange="toggleModuleSelection()">
@@ -76,9 +74,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {{ __('Nội dung yêu cầu chi tiết') }} <span class="text-red-500">*</span>
-                            </label>
+                            <x-input-label required for="content" :value="__('Request Form Content')" />
                             <textarea name="content" id="content" rows="6" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm resize-y">{{ old('content', $contact->content) }}</textarea>
                             <x-input-error :messages="$errors->get('content')" class="mt-2" />
@@ -86,10 +82,7 @@
 
                         @if (Auth::user()->hasRole('admin')) {{-- Chỉ hiển thị trạng thái cho admin --}}
                             <div class="mb-4">
-                                <label for="status"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ __('Trạng thái') }} <span class="text-red-500">*</span>
-                                </label>
+                                <x-input-label required for="status" :value="__('Request Form Status')" />
                                 <select name="status" id="status" required
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm">
                                     @foreach ($statuses as $key => $value)

@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Add New Role') }}
-        </h2>
+        <x-breadcrumb :items="[['name' => 'Roles', 'url' => route('roles.index')], ['name' => 'Add New Role']]" />
     </x-slot>
 
     <div class="py-4">
@@ -13,21 +11,28 @@
                         @csrf
 
                         <div>
-                            <x-input-label for="name" :value="__('Role Name')" />
+                            <x-input-label required for="name" :value="__('Role Name')" />
                             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
                                 :value="old('name')" required autofocus />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
                         <div class="mt-4">
-                            <x-input-label for="permissions" :value="__('Permissions')" />
-                            <select name="permissions[]" id="permissions" multiple
-                                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <x-input-label :value="__('Permissions')" />
+                            <div class="mt-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                                 @foreach ($permissions as $permission)
-                                    <option value="{{ $permission->name }}">{{ $permission->name }}</option>
+                                    <label for="permission_{{ $permission->id }}" class="flex items-center">
+                                        <input id="permission_{{ $permission->id }}" type="checkbox"
+                                            name="permissions[]" value="{{ $permission->id }}"
+                                            class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+                                            {{ in_array($permission->id, old('permissions', $userPermissions ?? [])) ? 'checked' : '' }} />
+                                        <span
+                                            class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __($permission->name) }}</span>
+                                    </label>
                                 @endforeach
-                            </select>
+                            </div>
                             <x-input-error :messages="$errors->get('permissions')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('permissions.*')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end mt-4">

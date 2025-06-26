@@ -46,46 +46,7 @@
         </main>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            // Lắng nghe sự kiện click trên tất cả các nút có lớp .toggle-password
-            $('.toggle-password').on('click', function() {
-                console.log('ok');
-
-                var targetId = $(this).data('target'); // Lấy ID của input được điều khiển
-                var passwordInput = $('#' + targetId); // Tìm input bằng ID
-
-                // Kiểm tra kiểu hiện tại của input
-                if (passwordInput.attr('type') === 'password') {
-                    passwordInput.attr('type', 'text'); // Chuyển sang text
-                    $(this).find('i').removeClass('bi-eye').addClass(
-                        'bi-eye-slash'); // Đổi biểu tượng sang mắt gạch chéo
-                } else {
-                    passwordInput.attr('type', 'password'); // Chuyển lại sang password
-                    $(this).find('i').removeClass('bi-eye-slash').addClass(
-                        'bi-eye'); // Đổi biểu tượng sang mắt
-                }
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const refreshButtons = document.querySelectorAll('.refresh-captcha-btn');
-
-            refreshButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const captchaImageDiv = this.previousElementSibling; // div.captcha-image
-                    const captchaImage = captchaImageDiv.querySelector('img');
-
-                    if (captchaImage) {
-                        // Tải lại hình ảnh Captcha bằng cách thay đổi src
-                        captchaImage.src = '{{ route('captcha.flat') }}?' + Math.random();
-                    }
-                });
-            });
-        });
-    </script>
+    @include('layouts.script_custom')
     <script src="{{ asset('js/chatbot-widget.js') }}"></script>
     @stack('scripts')
 </body>

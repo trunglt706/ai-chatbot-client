@@ -17,10 +17,9 @@
                     @endif
 
                     <div class="flex justify-end mb-4">
-                        <a href="{{ route('admin.posts.create') }}"
-                            class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            {{ __('Thêm Bài viết Mới') }}
-                        </a>
+                        @can('create posts')
+                            <x-href-button url="{{ route('posts.create') }}" name="Add New Post" />
+                        @endcan
                     </div>
 
                     <div class="overflow-x-auto">
@@ -81,16 +80,20 @@
                                             class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                             {{ $post->published_at ? $post->published_at->format('Y-m-d H:i') : 'N/A' }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                             <a href="{{ route('admin.posts.edit', $post->id) }}"
-                                                class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 mr-3">Sửa</a>
+                                                class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 mr-3">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
                                             <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST"
                                                 class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
                                                     class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600"
-                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">Xóa</button>
+                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">
+                                                    <i class="bi bi-x-circle"></i>
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>

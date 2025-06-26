@@ -31,9 +31,7 @@
                         @csrf
 
                         <div class="mb-4">
-                            <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {{ __('Phân loại yêu cầu') }} <span class="text-red-500">*</span>
-                            </label>
+                            <x-input-label required for="type" :value="__('Request Form Type')" />
                             <select name="type" id="type" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm"
                                 onchange="toggleModuleSelection()">

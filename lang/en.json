@@ -143,5 +143,20 @@
     "Or": "Or",
     "Last Updated At": "Last Updated At",
     "Created At": "Created At",
-    "User Code": "User Code"
+    "User Code": "User Code",
+    "Verify Account At": "Verify Account At",
+    "Social Accounts": "Social Accounts",
+    "Email Verified": "Email Verified",
+    "Blocked Account": "Blocked Account",
+    "created": "created",
+    "updated": "updated",
+    "deleted": "deleted",
+    "changed": "changed",
+    "by": "by",
+    "set": "set",
+    "from": "from",
+    "to": "to",
+    "No data.": "No data.",
+    "Edit Sponsor": "Edit Sponsor",
+    "Add New Sponsor": "Add New Sponsor"
 }

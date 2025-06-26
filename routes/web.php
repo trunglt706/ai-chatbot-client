@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityLogController;
-use App\Http\Controllers\Admin\SponsorController;
+use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\SystemController;

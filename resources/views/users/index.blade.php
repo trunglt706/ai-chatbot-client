@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot name="header">
+        <x-breadcrumb :items="[['name' => 'Users']]" />
+    </x-slot>
+
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -6,10 +10,7 @@
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-medium">@lang('Users')</h3>
                         @can('create users')
-                            <a href="{{ route('users.create') }}"
-                                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                                @lang('Add New User')
-                            </a>
+                            <x-href-button url="{{ route('users.create') }}" name="Add New User" />
                         @endcan
                     </div>
 
@@ -38,6 +39,14 @@
                                     </th>
                                     <th
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        @lang('Created At')
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        @lang('Status')
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         @lang('Actions')
                                     </th>
                                 </tr>
@@ -55,11 +64,23 @@
                                                 </span>
                                             @endforeach
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ $user->created_at->format('d/m/Y H:i:s') }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                                @if ($user->status === 'active') bg-green-100 text-green-800
+                                                @elseif($user->status === 'blocked') bg-red-100 text-red-800
+                                                @else bg-yellow-100 text-yellow-800 @endif">
+                                                {{ $user->status ? __(ucfirst($user->status)) : 'N/A' }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                                             @can('edit users')
                                                 <a href="{{ route('users.edit', $user->id) }}"
                                                     class="text-indigo-600 hover:text-indigo-900 mr-2">
-                                                    @lang('Edit')
+                                                    <i class="bi bi-pencil-square"></i>
                                                 </a>
                                             @endcan
                                             @can('delete users')
@@ -70,7 +91,7 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="text-red-600 hover:text-red-900">
-                                                            @lang('Delete')
+                                                            <i class="bi bi-x-circle"></i>
                                                         </button>
                                                     </form>
                                                 @endif

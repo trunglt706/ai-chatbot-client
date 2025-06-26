@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Sponsor;
@@ -13,8 +13,10 @@ class SponsorController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('can:manage sponsors');
+        $this->middleware(['auth', 'permission:view sponsors'])->only('index', 'show');
+        $this->middleware(['auth', 'permission:create sponsors'])->only('create', 'store');
+        $this->middleware(['auth', 'permission:edit sponsors'])->only('edit', 'update');
+        $this->middleware(['auth', 'permission:delete sponsors'])->only('destroy');
     }
 
     /**

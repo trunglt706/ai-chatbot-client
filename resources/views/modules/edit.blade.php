@@ -1,9 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('messages.edit_module') }}: {{ __("messages.module_names.{$module->code}") }}
-        </h2>
+        <x-breadcrumb :items="[['name' => 'Modules', 'url' => route('modules.index')], ['name' => 'Edit Module']]" />
     </x-slot>
+
 
     <div class="py-4">
         <div class="container">
@@ -11,22 +10,22 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('modules.update', $module->id) }}">
                         @csrf
-                        @method('PATCH') {{-- Hoặc @method('PUT') --}}
+                        @method('PATCH')
 
                         <div class="mb-3">
-                            <label for="name" class="form-label">{{ __('messages.module_name') }}</label>
+                            <x-input-label required for="name" :value="__('messages.module_name')" />
                             <input type="text" class="form-control" id="name" name="name"
                                 value="{{ old('name', __("messages.module_names.{$module->code}")) }}" required
-                                readonly> {{-- readonly vì tên thường không đổi --}}
+                                readonly>
                             @error('name')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="code" class="form-label">{{ __('messages.module_code') }}</label>
+                            <x-input-label required for="code" :value="__('messages.module_code')" />
                             <input type="text" class="form-control" id="code" name="code"
-                                value="{{ old('code', $module->code) }}" required readonly> {{-- readonly vì code không đổi --}}
+                                value="{{ old('code', $module->code) }}" required readonly>
                             @error('code')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -41,9 +40,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {{ __('Status') }} <span class="text-red-500">*</span>
-                            </label>
+                            <x-input-label required for="status" :value="__('Status')" />
                             <select name="status" id="status" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm">
                                 @foreach ($statuses as $key => $value)

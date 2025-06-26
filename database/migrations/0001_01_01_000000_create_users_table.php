@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('description')->nullable();
             $table->string('status')->nullable()->default(User::UNACTIVE);
+            $table->boolean('root')->nullable()->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

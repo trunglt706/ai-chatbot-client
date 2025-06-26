@@ -83,7 +83,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'password' => bcrypt('trunglt706@#'),
                 'status' => User::ACTIVE,
                 'email_verified_at' => now(),
-                'code' => 'trunglt706'
+                'code' => 'trunglt706',
+                'root' => true,
             ]
         );
         $user->assignRole('Account Admin');

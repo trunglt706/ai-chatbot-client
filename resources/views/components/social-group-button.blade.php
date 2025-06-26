@@ -1,4 +1,4 @@
-@if (env('APP_ENV') == 'production')
+@if (env('APP_ENV') !== 'production')
     {{-- NEW: Socialite Login Buttons --}}
     <div class="mt-6">
         <div class="relative">

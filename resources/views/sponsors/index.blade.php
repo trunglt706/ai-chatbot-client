@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Quản lý Nhà tài trợ') }}
-        </h2>
+        <x-breadcrumb :items="[['name' => 'Sponsors']]" />
     </x-slot>
 
     <div class="py-12">
@@ -10,10 +8,9 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex justify-end mb-4">
-                        <a href="{{ route('admin.sponsors.create') }}"
-                            class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            {{ __('Thêm Nhà tài trợ mới') }}
-                        </a>
+                        @can('create sponsors')
+                            <x-href-button url="{{ route('sponsors.create') }}" name="Add New Sponsor" />
+                        @endcan
                     </div>
 
                     @if (session('success'))
@@ -78,19 +75,20 @@
                                                 {{ ucfirst($sponsor->status) }}
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{ route('admin.sponsors.edit', $sponsor) }}"
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium  text-center">
+                                            <a href="{{ route('sponsors.edit', $sponsor) }}"
                                                 class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 mr-3">
-                                                {{ __('Sửa') }}
+                                                <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <form action="{{ route('admin.sponsors.destroy', $sponsor) }}"
-                                                method="POST" class="inline-block"
+                                            <form action="{{ route('sponsors.destroy', $sponsor) }}" method="POST"
+                                                class="inline-block"
                                                 onsubmit="return confirm('Bạn có chắc chắn muốn xóa nhà tài trợ này?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
                                                     class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600">
-                                                    {{ __('Xóa') }}
+                                                    <i class="bi bi-x-circle"></i>
                                                 </button>
                                             </form>
                                         </td>

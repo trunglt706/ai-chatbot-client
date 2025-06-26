@@ -27,9 +27,7 @@
                         @method('PUT')
 
                         <div class="mb-4">
-                            <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {{ __('Tiêu đề Bài viết') }} <span class="text-red-500">*</span>
-                            </label>
+                            <x-input-label required for="title" :value="__('Post Title')" />
                             <input type="text" name="title" id="title" value="{{ old('title', $post->title) }}"
                                 required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm">

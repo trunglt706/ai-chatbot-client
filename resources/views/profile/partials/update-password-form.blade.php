@@ -35,7 +35,7 @@
         </div>
 
         <div>
-            <x-input-label for="captcha" :value="__('Captcha')" />
+            <x-input-label required for="captcha" :value="__('Captcha')" />
             <div class="flex items-center">
                 {{-- Hiển thị hình ảnh Captcha --}}
                 <div class="captcha-image mr-4">{!! captcha_img('flat') !!}</div>

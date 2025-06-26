@@ -98,25 +98,7 @@
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <h3 class="text-xl font-semibold mb-4">{{ __('Nhật ký Hành động của bạn') }}</h3>
-                            @auth
-                                @forelse ($userActivities as $activity)
-                                    <div
-                                        class="mb-3 text-sm border-b border-gray-200 dark:border-gray-700 pb-2 last:border-b-0">
-                                        <p class="text-gray-700 dark:text-gray-300">
-                                            {{ $activity->description }}
-                                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-2">
-                                                ({{ $activity->created_at->diffForHumans() }})
-                                            </span>
-                                        </p>
-                                    </div>
-                                @empty
-                                    <p class="text-gray-500 dark:text-gray-400">
-                                        {{ __('Bạn chưa có hoạt động nào gần đây.') }}</p>
-                                @endforelse
-                            @else
-                                <p class="text-gray-500 dark:text-gray-400">
-                                    {{ __('Đăng nhập để xem nhật ký hoạt động của bạn.') }}</p>
-                            @endauth
+                            <x-activiti-timeline :activities="$userActivities" />
                         </div>
                     </div>
 

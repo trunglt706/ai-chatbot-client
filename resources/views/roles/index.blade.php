@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot name="header">
+        <x-breadcrumb :items="[['name' => 'Roles']]" />
+    </x-slot>
+
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -6,10 +10,7 @@
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-medium">@lang('Roles')</h3>
                         @can('create roles')
-                            <a href="{{ route('roles.create') }}"
-                                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                                @lang('Add New Role')
-                            </a>
+                            <x-href-button url="{{ route('roles.create') }}" name="Add New Role" />
                         @endcan
                     </div>
 
@@ -50,11 +51,11 @@
                                                 </span>
                                             @endforeach
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                                             @can('edit roles')
                                                 <a href="{{ route('roles.edit', $role->id) }}"
                                                     class="text-indigo-600 hover:text-indigo-900 mr-2">
-                                                    @lang('Edit')
+                                                    <i class="bi bi-pencil-square"></i>
                                                 </a>
                                             @endcan
                                             @can('delete roles')
@@ -65,7 +66,7 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="text-red-600 hover:text-red-900">
-                                                            @lang('Delete')
+                                                            <i class="bi bi-x-circle"></i>
                                                         </button>
                                                     </form>
                                                 @endif
