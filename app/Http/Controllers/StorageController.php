@@ -13,7 +13,7 @@ class StorageController extends Controller
 
     public function __construct(MediaService $mediaService)
     {
-        $this->middleware(['auth', 'can:manage storage']); // Cần quyền mới
+        $this->middleware(['auth', 'permission:report log storage'])->only('index', 'destroy', 'clearAll');
         $this->mediaService = $mediaService;
     }
 

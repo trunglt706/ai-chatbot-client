@@ -1,8 +1,10 @@
-@props(['disabled' => false, 'required' => false, 'label' => null])
+@props(['disabled' => false, 'required' => false, 'label' => null, 'placeholder' => null])
 
 @php
     $type = $attributes->get('type', 'text');
+    $name = $attributes->get('name');
     $cleanedAttributes = $attributes->except(['type', 'label', 'required']);
+    $errorClass = $name && $errors->has($name) ? 'is-invalid' : '';
 @endphp
 
 @if ($label)
@@ -19,8 +21,7 @@
         <input @disabled($disabled) @if ($required) required @endif
             {{ $cleanedAttributes->merge([
                 'type' => 'password',
-                'class' =>
-                    'form-control border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm',
+                'class' => 'form-control ' . $errorClass,
             ]) }}>
 
         <button class="btn btn-outline-secondary toggle-password" type="button"
@@ -29,10 +30,13 @@
         </button>
     </div>
 @else
-    <input @disabled($disabled) @if ($required) required @endif
+    <input placeholder="{{ __($placeholder) }}" @disabled($disabled)
+        @if ($required) required @endif
         {{ $attributes->merge([
             'type' => $type,
-            'class' =>
-                'form-control border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm',
+            'class' => 'form-control ' . $errorClass,
         ]) }}>
 @endif
+@error($name)
+    <div class="invalid-feedback">{{ $message }}</div>
+@enderror

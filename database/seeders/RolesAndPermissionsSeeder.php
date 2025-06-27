@@ -40,6 +40,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Permissions log storage
         Permission::firstOrCreate(['name' => 'view log storage']);
+        Permission::firstOrCreate(['name' => 'report log storage']);
 
         // Permissions request forms
         Permission::firstOrCreate(['name' => 'view request forms']);

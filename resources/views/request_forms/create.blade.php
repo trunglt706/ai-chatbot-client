@@ -1,25 +1,26 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="fw-semibold h4 text-dark mb-0">
             {{ __('Gửi Yêu Cầu Liên Hệ') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+    <div class="py-4">
+        <div class="container">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
 
                     @if (session('success'))
-                        <div class="mb-4 font-medium text-sm text-green-600 bg-green-100 p-3 rounded-md">
+                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
                             {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
 
                     @if ($errors->any())
-                        <div class="mb-4 font-medium text-red-600 bg-red-100 p-3 rounded-md">
-                            Có lỗi xảy ra:
-                            <ul class="mt-2 list-disc list-inside">
+                        <div class="alert alert-danger mb-4" role="alert">
+                            <div class="fw-semibold mb-2">Có lỗi xảy ra:</div>
+                            <ul class="mb-0 ps-3">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
@@ -32,8 +33,7 @@
 
                         <div class="mb-4">
                             <x-input-label required for="type" :value="__('Request Form Type')" />
-                            <select name="type" id="type" required
-                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm"
+                            <select name="type" id="type" required class="form-select mt-1"
                                 onchange="toggleModuleSelection()">
                                 <option value="">{{ __('Chọn phân loại') }}</option>
                                 @foreach ($formTypes as $key => $value)
@@ -48,11 +48,10 @@
                         {{-- Danh sách module (hiển thị có điều kiện) --}}
                         <div id="module-selection-container" class="mb-4"
                             style="display: {{ in_array(old('type'), [2, 3]) ? 'block' : 'none' }};">
-                            <label for="module_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <label for="module_id" class="form-label fw-semibold">
                                 {{ __('Chọn Module bạn quan tâm') }}
                             </label>
-                            <select name="module_id" id="module_id"
-                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm">
+                            <select name="module_id" id="module_id" class="form-select mt-1">
                                 <option value="">{{ __('Không chọn module cụ thể') }}</option>
                                 @foreach ($modules as $module)
                                     <option value="{{ $module->id }}"
@@ -65,22 +64,20 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                Nội dung liên hệ <span class="text-red-500">*</span>
+                            <label for="content" class="form-label fw-semibold">
+                                Nội dung liên hệ <span class="text-danger">*</span>
                             </label>
                             {{-- Input ẩn để Trix lưu trữ nội dung --}}
                             <input id="x" type="hidden" name="content"
                                 value="{{ old('content', $contact->content ?? '') }}">
-                            <trix-editor input="x"
-                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm"></trix-editor>
+                            <trix-editor input="x" class="form-control mt-1 min-vh-25"></trix-editor>
                             @error('content')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                <p class="text-danger text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="flex justify-end">
-                            <button type="submit"
-                                class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary text-uppercase fw-semibold text-xs">
                                 {{ __('Gửi Yêu Cầu') }}
                             </button>
                         </div>

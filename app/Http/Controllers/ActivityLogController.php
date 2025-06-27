@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Client\Request;
-use Spatie\Activitylog\Facades\Activity;
+use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
 class ActivityLogController extends Controller
 {

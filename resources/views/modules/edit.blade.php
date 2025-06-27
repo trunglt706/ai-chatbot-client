@@ -3,7 +3,6 @@
         <x-breadcrumb :items="[['name' => 'Modules', 'url' => route('modules.index')], ['name' => 'Edit Module']]" />
     </x-slot>
 
-
     <div class="py-4">
         <div class="container">
             <div class="card shadow-sm">
@@ -39,10 +38,9 @@
                             @enderror
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <x-input-label required for="status" :value="__('Status')" />
-                            <select name="status" id="status" required
-                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm">
+                            <select name="status" id="status" class="form-select" required>
                                 @foreach ($statuses as $key => $value)
                                     <option value="{{ $key }}"
                                         {{ old('status', $module->status) == $key ? 'selected' : '' }}>
@@ -54,9 +52,12 @@
                         </div>
 
                         <div class="d-flex justify-content-end mt-4">
-                            <a href="{{ route('modules.index') }}"
-                                class="btn btn-secondary me-2">{{ __('messages.cancel') }}</a>
-                            <button type="submit" class="btn btn-primary">{{ __('messages.update') }}</button>
+                            <a href="{{ route('modules.index') }}" class="btn btn-secondary me-2">
+                                {{ __('messages.cancel') }}
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('messages.update') }}
+                            </button>
                         </div>
                     </form>
                 </div>

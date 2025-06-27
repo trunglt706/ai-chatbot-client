@@ -1,39 +1,38 @@
-@props(['activities']) {{-- Define the prop 'activities' --}}
+@props(['activities'])
 
-<ol class="relative border-s border-gray-200 dark:border-gray-700">
+<ol class="list-group list-group-flush border-start border-2 border-secondary ps-1">
     @forelse ($activities as $activity)
-        <li class="mb-6 ms-4">
-            <div
-                class="absolute w-3 h-3 bg-gray-300 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-800 dark:bg-gray-600">
-            </div>
-            <time class="mb-1 text-xs font-normal leading-none text-gray-500 dark:text-gray-400">
-                {{ $activity->created_at->format('d M Y, H:i') }}
-            </time>
-            <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
+        <li class="list-group-item ps-4 position-relative border-0">
+            <div class="position-absolute top-0 start-0 translate-middle bg-primary border border-white rounded-circle"
+                style="width: 12px; height: 12px; margin-top: 6px; margin-left: -6px;"></div>
+
+            <small class="text-muted d-block mb-1">
+                <i class="bi bi-clock"></i> {{ $activity->created_at->format('d M Y, H:i') }}
+            </small>
+
+            <h6 class="mb-1">
                 {{ $activity->description }}
                 @if ($activity->causer)
-                    <span class="text-gray-500 dark:text-gray-400 text-xs"> (@lang('by')
-                        {{ $activity->causer->name }})</span>
+                    <small class="text-muted">(@lang('by') {{ $activity->causer->name }})</small>
                 @endif
-            </h4>
+            </h6>
+
             @if (
                 $activity->properties->count() > 0 &&
                     ($activity->properties->has('old') || $activity->properties->has('attributes')))
-                <div class="mt-1 text-xs text-gray-600 dark:text-gray-400">
+                <div class="small text-muted mt-1">
                     @foreach ($activity->properties as $key => $value)
                         @if ($key == 'old')
                             @foreach ($value as $propKey => $propValue)
-                                <p><strong>@lang('changed')</strong> {{ $propKey }}
-                                    @lang('from')
-                                    "{{ $propValue }}" @lang('to')
+                                <p class="mb-0"><strong>@lang('changed')</strong> {{ $propKey }}
+                                    @lang('from') "{{ $propValue }}" @lang('to')
                                     "{{ $activity->properties['attributes'][$propKey] ?? 'N/A' }}"
                                 </p>
                             @endforeach
                         @elseif ($key == 'attributes' && !$activity->properties->has('old'))
                             @foreach ($value as $propKey => $propValue)
-                                <p><strong>@lang('set'):</strong> {{ $propKey }}
-                                    @lang('to')
-                                    "{{ $propValue }}"</p>
+                                <p class="mb-0"><strong>@lang('set')</strong>: {{ $propKey }}
+                                    @lang('to') "{{ $propValue }}"</p>
                             @endforeach
                         @endif
                     @endforeach
@@ -41,9 +40,8 @@
             @endif
         </li>
     @empty
-        <li class="ms-4">
-            <p class="text-sm text-gray-500 dark:text-gray-400">
-                {{ __('No data.') }}</p>
+        <li class="list-group-item ps-4 border-0">
+            <p class="text-muted small mb-0">{{ __('No data.') }}</p>
         </li>
     @endforelse
 </ol>

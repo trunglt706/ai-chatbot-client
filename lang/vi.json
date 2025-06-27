@@ -159,5 +159,15 @@
     "to": "đến",
     "No data.": "Không có dữ liệu.",
     "Edit Sponsor": "Cập nhật nhà tài trợ",
-    "Add New Sponsor": "Thêm mới nhà tài trợ"
+    "Add New Sponsor": "Thêm mới nhà tài trợ",
+    "The selected email is invalid.": "Email không hợp lệ.",
+    "Add New": "Tạo mới",
+    "Search": "Tìm kiếm",
+    "Activity Logs": "Nhật ký hoạt động",
+    "Storage Logs": "Nhật ký lưu trữ",
+    "Storage Report": "Báo cáo lưu trữ",
+    "System Info": "Thông tin hệ thống",
+    "Telescope": "Telescope",
+    "Posts": "Bài viết",
+    "N/A": "N/A"
 }

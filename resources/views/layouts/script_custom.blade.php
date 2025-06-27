@@ -19,42 +19,59 @@
 
         $('form').on('submit', function() {
             const $form = $(this);
-            // Tìm nút submit bên trong form đang được submit
+
+            // Nếu form có thuộc tính onsubmit (inline handler), thì không xử lý spinner
+            if ($form.attr('onsubmit')) {
+                return;
+            }
+
             const $submitButton = $form.find('button[type="submit"], input[type="submit"]');
 
             $submitButton.attr('disabled', 'true');
             $submitButton.addClass('opacity-75 cursor-not-allowed');
 
-            // Lưu trữ nội dung gốc của nút để khôi phục sau (tùy chọn)
+            // Lưu trữ nội dung gốc của nút để khôi phục sau (nếu cần)
             const originalButtonContent = $submitButton.html();
 
             $submitButton.html(`
-                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Processing...
-                `);
+                <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                Loading...
+            `);
         });
 
         // sự kiện cập nhật hình ảnh captcha
-        document.addEventListener('DOMContentLoaded', function() {
-            const refreshButtons = document.querySelectorAll('.refresh-captcha-btn');
+        $('.refresh-captcha-btn').on('click', function(e) {
+            e.preventDefault();
 
-            refreshButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const captchaImageDiv = this
-                        .previousElementSibling; // div.captcha-image
-                    const captchaImage = captchaImageDiv.querySelector('img');
+            const $button = $(this);
+            const $captchaImage = $button.prev('.captcha-image').find('img');
 
-                    if (captchaImage) {
-                        // Tải lại hình ảnh Captcha bằng cách thay đổi src
-                        captchaImage.src = '{{ route('captcha.flat') }}?' + Math
-                            .random();
-                    }
+            // Lưu nội dung gốc của nút
+            const originalButtonContent = $button.html();
+
+            // Cập nhật trạng thái loading
+            $button
+                .attr('disabled', true)
+                .addClass('opacity-75 cursor-not-allowed')
+                .html(`<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Loading...</span>`);
+            if ($captchaImage.length) {
+                const newSrc = "{{ route('captcha.flat') }}?" + Math.random();
+                $captchaImage.attr('src', newSrc);
+
+                // Khi ảnh load xong thì khôi phục lại nút
+                $captchaImage.on('load', function() {
+                    $button
+                        .removeAttr('disabled')
+                        .removeClass('opacity-75 cursor-not-allowed')
+                        .html(originalButtonContent);
                 });
-            });
+            }
         });
+
+
     });
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>

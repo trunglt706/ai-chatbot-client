@@ -4,41 +4,44 @@
     </x-slot>
 
     <div class="py-4">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+        <div class="container">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
                     <form method="POST" action="{{ route('roles.update', $role->id) }}">
                         @csrf
                         @method('PUT')
 
-                        <div>
+                        <div class="mb-4">
                             <x-input-label required for="name" :value="__('Role Name')" />
-                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
+                            <x-text-input id="name" class="form-control mt-1" type="text" name="name"
                                 :value="old('name', $role->name)" required autofocus />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mb-4">
                             <x-input-label :value="__('Permissions')" />
-                            <div class="mt-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                            <div class="row g-3">
                                 @foreach ($permissions as $permission)
-                                    <label for="permission_{{ $permission->id }}" class="flex items-center">
-                                        <input id="permission_{{ $permission->id }}" type="checkbox"
-                                            name="permissions[]" value="{{ $permission->name }}"
-                                            class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
-                                            {{ in_array($permission->name, old('permissions', $rolePermissions ?? [])) ? 'checked' : '' }} />
-                                        <span
-                                            class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __($permission->name) }}</span>
-                                    </label>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="form-check">
+                                            <input id="permission_{{ $permission->id }}" type="checkbox"
+                                                name="permissions[]" value="{{ $permission->name }}"
+                                                class="form-check-input"
+                                                {{ in_array($permission->name, old('permissions', $rolePermissions ?? [])) ? 'checked' : '' }} />
+                                            <label class="form-check-label" for="permission_{{ $permission->id }}">
+                                                {{ ucfirst(__($permission->name)) }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </div>
                             <x-input-error :messages="$errors->get('permissions')" class="mt-2" />
                             <x-input-error :messages="$errors->get('permissions.*')" class="mt-2" />
                         </div>
 
-                        <div class="flex items-center justify-end mt-4">
-                            <x-primary-button class="ml-4">
-                                {{ __('Update Role') }}
+                        <div class="d-flex justify-content-end mt-4">
+                            <x-primary-button>
+                                <i class="bi bi-floppy-fill"></i> {{ __('Update Role') }}
                             </x-primary-button>
                         </div>
                     </form>

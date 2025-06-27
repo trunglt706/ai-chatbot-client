@@ -4,68 +4,63 @@
     </x-slot>
 
     <div class="py-4">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-medium">@lang('Roles')</h3>
+        <div class="container">
+
+            <x-alert-message />
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex align-items-center">
+                            <x-text-input id="search" class="form-control" name="search" placeholder="Search" />
+                        </div>
                         @can('create roles')
-                            <x-href-button url="{{ route('roles.create') }}" name="Add New Role" />
+                            <x-href-button icon="bi bi-plus" url="{{ route('roles.create') }}" name="Add New" />
                         @endcan
                     </div>
 
-                    @if (session('success'))
-                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                            role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead>
+                    <div class="table-responsive">
+                        <table class="table align-middle table-hover text-nowrap">
+                            <thead class="table-light">
                                 <tr>
-                                    <th
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="text-start text-uppercase small fw-bold">
                                         @lang('Name')
                                     </th>
-                                    <th
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="text-start text-uppercase small fw-bold">
                                         @lang('Permissions')
                                     </th>
-                                    <th
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="text-center text-uppercase small fw-bold">
                                         @lang('Actions')
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tbody>
                                 @foreach ($roles as $role)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $role->name }}</td>
-                                        <td class="px-6 py-4">
+                                        <td>{{ $role->name }}</td>
+                                        <td class="text-wrap">
                                             @foreach ($role->permissions as $permission)
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mb-1">
+                                                <span class="badge bg-success mb-1">
                                                     {{ __($permission->name) }}
                                                 </span>
                                             @endforeach
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
+                                        <td class="text-center">
                                             @can('edit roles')
                                                 <a href="{{ route('roles.edit', $role->id) }}"
-                                                    class="text-indigo-600 hover:text-indigo-900 mr-2">
+                                                    class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip"
+                                                    data-bs-title="@lang('Edit')">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
                                             @endcan
                                             @can('delete roles')
                                                 @if ($role->name != 'admin')
                                                     <form action="{{ route('roles.destroy', $role->id) }}" method="POST"
-                                                        class="inline-block"
-                                                        onsubmit="return confirm('@lang('Are you sure you want to delete this role?')');">
+                                                        class="d-inline" onsubmit="return confirm('@lang('Are you sure you want to delete this role?')');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="text-red-600 hover:text-red-900">
+                                                        <button type="submit" class="btn btn-sm btn-danger"
+                                                            data-bs-toggle="tooltip" data-bs-title="@lang('Delete')">
                                                             <i class="bi bi-x-circle"></i>
                                                         </button>
                                                     </form>

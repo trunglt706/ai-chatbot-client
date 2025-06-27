@@ -158,5 +158,15 @@
     "to": "to",
     "No data.": "No data.",
     "Edit Sponsor": "Edit Sponsor",
-    "Add New Sponsor": "Add New Sponsor"
+    "Add New Sponsor": "Add New Sponsor",
+    "The selected email is invalid.": "The selected email is invalid.",
+    "Add New": "Add New",
+    "Search": "Search",
+    "Activity Logs": "Activity Logs",
+    "Storage Logs": "Storage Logs",
+    "Storage Report": "Storage Report",
+    "System Info": "System Info",
+    "Telescope": "Telescope",
+    "Posts": "Posts",
+    "N/A": "N/A"
 }

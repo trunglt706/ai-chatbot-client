@@ -3,67 +3,57 @@
         @csrf
 
         <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
+        <div class="mb-2">
+            <x-input-label for="name" :value="__('Name')" class="form-label" />
+            <x-text-input id="name" class="form-control" type="text" name="name" :value="old('name')" required
                 autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <x-input-error :messages="$errors->get('name')" class="form-text text-danger" />
         </div>
 
         <!-- Email Address -->
-        <div class="mt-2">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="mb-2">
+            <x-input-label for="email" :value="__('Email')" class="form-label" />
+            <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')" required
+                autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="form-text text-danger" />
         </div>
 
         <!-- Password -->
-        <div class="mt-2">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block w-full" type="password" name="password" required
+        <div class="mb-2">
+            <x-input-label for="password" :value="__('Password')" class="form-label" />
+            <x-text-input id="password" class="form-control" type="password" name="password" required
                 autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <x-input-error :messages="$errors->get('password')" class="form-text text-danger" />
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-2">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block w-full" type="password" name="password_confirmation"
+        <div class="mb-2">
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="form-label" />
+            <x-text-input id="password_confirmation" class="form-control" type="password" name="password_confirmation"
                 required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="form-text text-danger" />
         </div>
 
-        <div class="mt-2">
-            <x-input-label for="captcha" :value="__('Captcha')" />
-            <div class="flex items-center">
-                {{-- Hiển thị hình ảnh Captcha --}}
-                <div class="captcha-image mr-4">{!! captcha_img('flat') !!}</div>
-                {{-- Nút refresh Captcha --}}
-                <button type="button"
-                    class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 refresh-captcha-btn">
+        <!-- Captcha -->
+        <div class="mb-2">
+            <x-input-label for="captcha" :value="__('Captcha')" class="form-label" />
+            <div class="d-flex align-items-center mb-2">
+                <div class="captcha-image me-3">{!! captcha_img('flat') !!}</div>
+                <button type="button" class="btn btn-outline-secondary btn-sm refresh-captcha-btn">
                     {{ __('Refresh Captcha') }}
                 </button>
             </div>
-            <x-text-input id="captcha" class="block mt-1 w-full" type="text" name="captcha" required />
-            <x-input-error :messages="$errors->get('captcha')" class="mt-2" />
+            <x-text-input id="captcha" class="form-control" type="text" name="captcha" required />
+            <x-input-error :messages="$errors->get('captcha')" class="form-text text-danger" />
         </div>
 
-        <div class="flex items-center justify-end mt-3">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                href="{{ route('login') }}">
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <a class="text-decoration-none small" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
-
-            <x-primary-button class="ms-4">
+            <x-primary-button class="btn btn-primary">
                 {{ __('Register') }}
             </x-primary-button>
         </div>
     </form>
-
-    <x-social-group-button />
 </x-guest-layout>

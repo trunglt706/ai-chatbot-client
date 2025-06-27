@@ -33,7 +33,7 @@ class HomeController extends Controller
             $userActivities = Activity::where('causer_id', Auth::id())
                 ->where('causer_type', 'App\\Models\\User')
                 ->latest()
-                ->take(10)
+                ->take(5)
                 ->get();
         }
 

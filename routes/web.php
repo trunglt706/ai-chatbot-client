@@ -71,17 +71,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Quản lý Dung lượng Hệ thống
-    Route::prefix('storage')->middleware(['can:manage storage'])->group(function () {
-        Route::get('', [StorageController::class, 'index'])->name('storage.index');
+    Route::prefix('storage')->group(function () {
+        Route::get('/report', [StorageController::class, 'index'])->name('storage.index');
         Route::delete('/{media}', [StorageController::class, 'destroy'])->name('storage.destroy');
         Route::post('/clear-all', [StorageController::class, 'clearAll'])->name('storage.clear-all');
     });
 
     // Quản lý Hệ thống
     Route::middleware(['can:manage system'])->prefix('system')->group(function () {
-        Route::get('', [SystemController::class, 'index'])->name('admin.system.index');
-        Route::delete('/data/{table_name}', [SystemController::class, 'deleteTableData'])->name('admin.system.delete_table_data');
-        Route::post('/clear-all-data', [SystemController::class, 'clearAllData'])->name('admin.system.clear_all_data');
+        Route::get('', [SystemController::class, 'index'])->name('system.index');
+        Route::delete('/data/{table_name}', [SystemController::class, 'deleteTableData'])->name('system.delete_table_data');
+        Route::post('/clear-all-data', [SystemController::class, 'clearAllCache'])->name('system.clear_all_data');
 
         // NEW Routes for testing services
         Route::post('/test-broadcast', [SystemController::class, 'testBroadcast'])->name('system.test_broadcast');

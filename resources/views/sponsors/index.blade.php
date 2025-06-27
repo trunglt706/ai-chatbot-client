@@ -3,91 +3,71 @@
         <x-breadcrumb :items="[['name' => 'Sponsors']]" />
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="flex justify-end mb-4">
+    <div class="py-4">
+        <div class="container">
+
+            <x-alert-message />
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-end mb-4">
                         @can('create sponsors')
                             <x-href-button url="{{ route('sponsors.create') }}" name="Add New Sponsor" />
                         @endcan
                     </div>
 
-                    @if (session('success'))
-                        <div class="mb-4 font-medium text-sm text-green-600 bg-green-100 p-3 rounded-md">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-gray-50 dark:bg-gray-700">
+                    <div class="table-responsive">
+                        <table class="table align-middle table-hover text-nowrap">
+                            <thead class="table-light">
                                 <tr>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        {{ __('Mã') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        {{ __('Tên') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        {{ __('Hình ảnh') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        {{ __('Trạng thái') }}
-                                    </th>
-                                    <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">{{ __('Hành động') }}</span>
-                                    </th>
+                                    <th scope="col" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Mã') }}</th>
+                                    <th scope="col" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Tên') }}</th>
+                                    <th scope="col" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Hình ảnh') }}</th>
+                                    <th scope="col" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Trạng thái') }}</th>
+                                    <th scope="col" class="text-center text-uppercase small fw-bold">
+                                        {{ __('Hành động') }}</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            <tbody>
                                 @forelse ($sponsors as $sponsor)
                                     <tr>
-                                        <td
-                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                            {{ $sponsor->code }}
-                                        </td>
-                                        <td
-                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                            {{ $sponsor->name }}
-                                        </td>
-                                        <td
-                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                        <td>{{ $sponsor->code }}</td>
+                                        <td>{{ $sponsor->name }}</td>
+                                        <td>
                                             @if ($sponsor->image)
                                                 <img src="{{ Storage::url($sponsor->image) }}"
-                                                    alt="{{ $sponsor->name }}"
-                                                    class="h-10 w-10 object-contain rounded-full">
+                                                    alt="{{ $sponsor->name }}" class="rounded-circle object-fit-contain"
+                                                    style="height: 40px; width: 40px;">
                                             @else
                                                 {{ __('Không có ảnh') }}
                                             @endif
                                         </td>
-                                        <td
-                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                        <td>
                                             <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                                @if ($sponsor->status === 'active') bg-green-100 text-green-800
-                                                @elseif($sponsor->status === 'inactive') bg-red-100 text-red-800
-                                                @else bg-yellow-100 text-yellow-800 @endif">
+                                                class="badge rounded-pill
+                                                @if ($sponsor->status === 'active') bg-success
+                                                @elseif($sponsor->status === 'inactive') bg-danger
+                                                @else bg-warning text-dark @endif">
                                                 {{ ucfirst($sponsor->status) }}
                                             </span>
                                         </td>
-                                        <td
-                                            class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium  text-center">
+                                        <td class="text-center">
                                             <a href="{{ route('sponsors.edit', $sponsor) }}"
-                                                class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 mr-3">
+                                                class="btn btn-primary btn-sm me-2" data-bs-toggle="tooltip"
+                                                data-bs-title="@lang('Edit')">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <form action="{{ route('sponsors.destroy', $sponsor) }}" method="POST"
-                                                class="inline-block"
+                                                class="d-inline"
                                                 onsubmit="return confirm('Bạn có chắc chắn muốn xóa nhà tài trợ này?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
-                                                    class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600">
+                                                <button type="submit" class="btn btn-sm btn-danger"
+                                                    data-bs-toggle="tooltip" data-bs-title="@lang('Delete')">
                                                     <i class="bi bi-x-circle"></i>
                                                 </button>
                                             </form>
@@ -95,8 +75,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5"
-                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                        <td colspan="5" class="text-center text-secondary">
                                             {{ __('Không có nhà tài trợ nào được tìm thấy.') }}
                                         </td>
                                     </tr>
