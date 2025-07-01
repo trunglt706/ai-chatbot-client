@@ -15,16 +15,8 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" crossorigin="anonymous">
     {{-- Script cho Toastify --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/toastify.min.css') }}">
-    <script type="text/javascript" src="{{ asset('js/toastify-js.js') }}"></script>
 
-    @auth
-        <script>
-            window.Laravel = {!! json_encode([
-                'csrfToken' => csrf_token(),
-                'user' => Auth::user(),
-            ]) !!};
-        </script>
-    @endauth
+    @stack('styles')
 </head>
 
 <body class="bg-light">
@@ -45,12 +37,19 @@
             {{ $slot }}
         </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script>
-    </script>
+    <script type="text/javascript" src="{{ asset('js/toastify-js.js') }}"></script>
+    @stack('scripts')
     @include('layouts.script_custom')
     <script src="{{ asset('js/chatbot-widget.js') }}"></script>
-    @stack('scripts')
+
+    {{-- Vite JS --}}
+    @viteReactRefresh
+
+    @vite(['resources/js/app.jsx']);
 </body>
 
 </html>

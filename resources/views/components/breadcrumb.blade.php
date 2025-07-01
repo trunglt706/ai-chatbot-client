@@ -23,9 +23,14 @@
         </ol>
     </nav>
 
-    @if ($backUrl ?? url()->previous())
-        <a href="{{ $backUrl ?? url()->previous() }}" class="btn btn-outline-secondary btn-sm ms-3">
-            <i class="bi bi-arrow-left"></i> {{ __('Back') }}
+    <div class="btn-group">
+        @if ($backUrl ?? url()->previous())
+            <a href="{{ $backUrl ?? url()->previous() }}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left"></i> {{ __('Back') }}
+            </a>
+        @endif
+        <a href="" class="btn btn-secondary btn-sm btn-loading">
+            <i class="bi bi-arrow-clockwise"></i> {{ __('Reload') }}
         </a>
-    @endif
+    </div>
 </div>

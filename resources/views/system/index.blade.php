@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="fw-semibold h4 text-dark mb-0">
-            {{ __('Quản lý Hệ thống') }}
-        </h2>
+        <x-breadcrumb :items="[['name' => 'System Info']]" />
     </x-slot>
 
     <div class="py-4">
@@ -10,107 +8,105 @@
 
             <x-alert-message />
 
-            <h3 class="h4 fw-bold mb-4">{{ __('Tổng quan hệ thống') }}</h3>
-
             <div class="row g-4">
-                {{-- Card: Thông tin Symbolic Link --}}
+                {{-- Card: Symbolic Link Info --}}
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="bg-light p-4 rounded-3 shadow-sm h-100">
-                        <h4 class="h6 fw-bold mb-3">{{ __('Trạng thái Storage Link') }}</h4>
-                        <p class="text-secondary mb-2">
-                            {{ __('Đường dẫn công khai cho file tải lên.') }}
+                    <div class="card card-body h-100">
+                        <h4 class="h6 fw-bold mb-3">{{ __('Storage Link Status') }}</h4>
+                        <p class="text-secondary mb-1">
+                            {{ __('Public path for uploaded files.') }}
                         </p>
                         <div class="d-flex align-items-center mb-3">
-                            <span class="fw-bold me-2">{{ __('Trạng thái:') }}</span>
+                            <span class="fw-bold me-2">{{ __('Status:') }}</span>
                             @if ($storageLinkExists)
-                                <span class="badge bg-success">{{ __('Đã tạo') }}</span>
+                                <span class="badge bg-success">{{ __('Created') }}</span>
                             @else
-                                <span class="badge bg-danger">{{ __('Chưa tạo') }}</span>
+                                <span class="badge bg-danger">{{ __('Not created') }}</span>
                             @endif
                         </div>
                         @if (!$storageLinkExists)
                             <form action="{{ route('system.create_storage_link') }}" method="POST">
                                 @csrf
                                 <x-primary-button type="submit">
-                                    {{ __('Tạo Symbolic Link ngay') }}
+                                    {{ __('Create Symbolic Link now') }}
                                 </x-primary-button>
                             </form>
                             <p class="small text-muted mt-2">
-                                {{ __('Việc này cho phép các file được tải lên có thể truy cập công khai.') }}
+                                {{ __('This allows uploaded files to be publicly accessible.') }}
                             </p>
                         @else
                             <p class="text-secondary">
-                                {{ __('Symbolic link đã tồn tại và hoạt động.') }}
+                                {{ __('Symbolic link already exists and is active.') }}
                             </p>
                         @endif
                     </div>
                 </div>
 
-                {{-- Card: Thông tin Dung lượng Public Storage --}}
+                {{-- Card: Public Storage Size Info --}}
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="bg-light p-4 rounded-3 shadow-sm h-100">
-                        <h4 class="h6 fw-bold mb-3">{{ __('Dung lượng Public Storage') }}</h4>
-                        <p class="text-secondary mb-2">
-                            {{ __('Tổng dung lượng các file được tải lên công khai.') }}
+                    <div class="card card-body h-100">
+                        <h4 class="h6 fw-bold mb-3">{{ __('Public Storage Size') }}</h4>
+                        <p class="text-secondary mb-1">
+                            {{ __('Total size of publicly uploaded files.') }}
                         </p>
                         <div class="d-flex align-items-center mb-3">
-                            <span class="fw-bold me-2">{{ __('Dung lượng:') }}</span>
+                            <span class="fw-bold me-2">{{ __('Size:') }}</span>
                             <span>{{ $publicStorageSize }}</span>
                         </div>
                         <p class="small text-muted mt-2">
-                            {{ __('Bao gồm hình ảnh nhà tài trợ, ảnh bài viết, v.v.') }}
+                            {{ __('Includes sponsor images, post images, etc.') }}
                         </p>
                     </div>
                 </div>
 
-                {{-- Card: Thông tin chung của hệ thống --}}
+                {{-- Card: General System Info --}}
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="bg-light p-4 rounded-3 shadow-sm h-100">
-                        <h4 class="h6 fw-bold mb-3">{{ __('Thông tin chung') }}</h4>
+                    <div class="card card-body h-100">
+                        <h4 class="h6 fw-bold mb-3">{{ __('General Information') }}</h4>
                         <p class="mb-2">
-                            <span class="fw-bold">{{ __('Phiên bản Laravel:') }}</span> {{ app()->version() }}
+                            <span class="fw-bold">{{ __('Laravel Version:') }}</span> {{ app()->version() }}
                         </p>
                         <p class="mb-2">
-                            <span class="fw-bold">{{ __('Môi trường:') }}</span> {{ app()->environment() }}
+                            <span class="fw-bold">{{ __('Environment:') }}</span> {{ app()->environment() }}
                         </p>
                         <p class="text-secondary mb-0">
-                            {{ __('Giúp kiểm tra cấu hình và môi trường hiện tại của ứng dụng.') }}
+                            {{ __('Helps check the current configuration and environment of the application.') }}
                         </p>
                     </div>
                 </div>
 
-                {{-- Card: Xóa Cache Toàn bộ Hệ thống --}}
+                {{-- Card: Clear All System Cache --}}
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="bg-light p-4 rounded-3 shadow-sm h-100">
-                        <h4 class="h6 fw-bold mb-3">{{ __('Xóa Cache Hệ thống') }}</h4>
+                    <div class="card card-body h-100">
+                        <h4 class="h6 fw-bold mb-3">{{ __('Clear System Cache') }}</h4>
                         <p class="text-secondary mb-3">
-                            {{ __('Xóa tất cả các cache (cấu hình, route, view, ứng dụng) để làm mới hệ thống.') }}
+                            {{ __('Clear all caches (config, route, view, application) to refresh the system.') }}
                         </p>
                         <form action="{{ route('system.clear_all_data') }}" method="POST">
                             @csrf
                             <x-primary-button type="submit" class="btn-warning">
-                                {{ __('Xóa Toàn bộ Cache') }}
+                                {{ __('Clear All Cache') }}
                             </x-primary-button>
                         </form>
                         <p class="small text-muted mt-2">
-                            {{ __('Nên làm khi có thay đổi về cấu hình hoặc mã nguồn.') }}
+                            {{ __('Recommended after configuration or source code changes.') }}
                         </p>
                     </div>
                 </div>
 
-                {{-- Card: Trạng thái và Test Broadcasting --}}
+                {{-- Card: Broadcasting Status and Test --}}
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="bg-light p-4 rounded-3 shadow-sm h-100">
-                        <h4 class="h6 fw-bold mb-3">{{ __('Trạng thái Broadcasting') }}</h4>
-                        <p class="text-secondary mb-2">
-                            {{ __('Kiểm tra cấu hình Real-time Broadcasting.') }}
+                    <div class="card card-body h-100">
+                        <h4 class="h6 fw-bold mb-3">{{ __('Broadcasting Status') }}</h4>
+                        <p class="text-secondary mb-1">
+                            {{ __('Check Real-time Broadcasting configuration.') }}
                         </p>
                         <div class="d-flex align-items-center mb-2">
-                            <span class="fw-bold me-2">{{ __('Cấu hình:') }}</span>
+                            <span class="fw-bold me-2">{{ __('Config:') }}</span>
                             @if ($broadcastConfigStatus['status'] === 'active')
-                                <span class="badge bg-success">{{ __('Hoạt động') }}</span>
+                                <span class="badge bg-success">{{ __('Active') }}</span>
                             @else
-                                <span class="badge bg-danger">{{ __('Không hoạt động') }}</span>
+                                <span class="badge bg-danger">{{ __('Inactive') }}</span>
                             @endif
                         </div>
                         <p class="small text-muted mb-2">
@@ -129,11 +125,11 @@
                         @endif
 
                         <div class="mt-3 pt-3 border-top">
-                            <h5 class="fw-semibold mb-2">{{ __('Kiểm tra hoạt động:') }}</h5>
+                            <h5 class="fw-semibold mb-2">{{ __('Test functionality:') }}</h5>
                             <form action="{{ route('system.test_broadcast') }}" method="POST">
                                 @csrf
                                 <x-primary-button type="submit" class="btn-primary">
-                                    {{ __('Gửi sự kiện Test') }}
+                                    {{ __('Send Test Event') }}
                                 </x-primary-button>
                             </form>
                             @if (session('broadcast_test_result'))
@@ -144,25 +140,25 @@
                                 </div>
                             @endif
                             <p class="small text-muted mt-2">
-                                {{ __('Kiểm tra log hoặc dashboard của dịch vụ broadcasting (Pusher, Redis, v.v.) để xác minh.') }}
+                                {{ __('Check the log or dashboard of the broadcasting service (Pusher, Redis, etc.) to verify.') }}
                             </p>
                         </div>
                     </div>
                 </div>
 
-                {{-- Card: Trạng thái và Test Email --}}
+                {{-- Card: Email Status and Test --}}
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="bg-light p-4 rounded-3 shadow-sm h-100">
-                        <h4 class="h6 fw-bold mb-3">{{ __('Trạng thái Email') }}</h4>
-                        <p class="text-secondary mb-2">
-                            {{ __('Kiểm tra cấu hình gửi Email của hệ thống.') }}
+                    <div class="card card-body h-100">
+                        <h4 class="h6 fw-bold mb-3">{{ __('Email Status') }}</h4>
+                        <p class="text-secondary mb-1">
+                            {{ __('Check system email sending configuration.') }}
                         </p>
                         <div class="d-flex align-items-center mb-2">
-                            <span class="fw-bold me-2">{{ __('Cấu hình:') }}</span>
+                            <span class="fw-bold me-2">{{ __('Config:') }}</span>
                             @if ($emailConfigStatus['status'] === 'active')
-                                <span class="badge bg-success">{{ __('Hoạt động') }}</span>
+                                <span class="badge bg-success">{{ __('Active') }}</span>
                             @else
-                                <span class="badge bg-danger">{{ __('Không hoạt động') }}</span>
+                                <span class="badge bg-danger">{{ __('Inactive') }}</span>
                             @endif
                         </div>
                         <p class="small text-muted mb-2">
@@ -180,14 +176,14 @@
                         @endif
 
                         <div class="mt-3 pt-3 border-top">
-                            <h5 class="fw-semibold mb-2">{{ __('Kiểm tra hoạt động:') }}</h5>
+                            <h5 class="fw-semibold mb-2">{{ __('Test functionality:') }}</h5>
                             <form action="{{ route('system.test_email') }}" method="POST">
                                 @csrf
-                                <x-input-label for="email_recipient" :value="__('Email nhận Test')" class="visually-hidden" />
+                                <x-input-label for="email_recipient" :value="__('Test recipient email')" class="visually-hidden" />
                                 <x-text-input id="email_recipient" name="email_recipient" type="email"
-                                    class="form-control mb-2" placeholder="Nhập email nhận test" required />
+                                    class="form-control mb-2" placeholder="Enter test recipient email" required />
                                 <x-primary-button type="submit" class="btn-primary">
-                                    {{ __('Gửi Email Test') }}
+                                    {{ __('Send Test Email') }}
                                 </x-primary-button>
                             </form>
                             @if (session('email_test_result'))
@@ -198,25 +194,25 @@
                                 </div>
                             @endif
                             <p class="small text-muted mt-2">
-                                {{ __('Một email sẽ được gửi đến địa chỉ bạn cung cấp.') }}
+                                {{ __('An email will be sent to the address you provide.') }}
                             </p>
                         </div>
                     </div>
                 </div>
 
-                {{-- Card: Trạng thái và Test Slack --}}
+                {{-- Card: Slack Status and Test --}}
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="bg-light p-4 rounded-3 shadow-sm h-100">
-                        <h4 class="h6 fw-bold mb-3">{{ __('Trạng thái Slack') }}</h4>
-                        <p class="text-secondary mb-2">
-                            {{ __('Kiểm tra cấu hình tích hợp Slack.') }}
+                    <div class="card card-body h-100">
+                        <h4 class="h6 fw-bold mb-3">{{ __('Slack Status') }}</h4>
+                        <p class="text-secondary mb-1">
+                            {{ __('Check Slack integration configuration.') }}
                         </p>
                         <div class="d-flex align-items-center mb-2">
-                            <span class="fw-bold me-2">{{ __('Cấu hình:') }}</span>
+                            <span class="fw-bold me-2">{{ __('Config:') }}</span>
                             @if ($slackConfigStatus['status'] === 'active')
-                                <span class="badge bg-success">{{ __('Hoạt động') }}</span>
+                                <span class="badge bg-success">{{ __('Active') }}</span>
                             @else
-                                <span class="badge bg-danger">{{ __('Không hoạt động') }}</span>
+                                <span class="badge bg-danger">{{ __('Inactive') }}</span>
                             @endif
                         </div>
                         <p class="small text-muted mb-2">
@@ -231,11 +227,11 @@
                         @endif
 
                         <div class="mt-3 pt-3 border-top">
-                            <h5 class="fw-semibold mb-2">{{ __('Kiểm tra hoạt động:') }}</h5>
+                            <h5 class="fw-semibold mb-2">{{ __('Test functionality:') }}</h5>
                             <form action="{{ route('system.test_slack') }}" method="POST">
                                 @csrf
                                 <x-primary-button type="submit" class="btn-primary">
-                                    {{ __('Gửi thông báo Test') }}
+                                    {{ __('Send Test Notification') }}
                                 </x-primary-button>
                             </form>
                             @if (session('slack_test_result'))
@@ -246,7 +242,7 @@
                                 </div>
                             @endif
                             <p class="small text-muted mt-2">
-                                {{ __('Một thông báo sẽ được gửi tới kênh Slack đã cấu hình.') }}
+                                {{ __('A notification will be sent to the configured Slack channel.') }}
                             </p>
                         </div>
                     </div>

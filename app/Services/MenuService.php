@@ -75,7 +75,7 @@ class MenuService
                     [
                         'name' => 'Storage Report',
                         'url' => route('storage.index'),
-                        'active' => request()->routeIs('storage'),
+                        'active' => request()->routeIs('storage.*'),
                         'permission' => 'view log storage',
                     ],
                     [
@@ -90,6 +90,12 @@ class MenuService
                         'active' => request('/telescope'),
                         'permission' => 'manage telescope',
                     ],
+                    [
+                        'name' => 'Backups',
+                        'url' => route('backups.index'),
+                        'active' => request()->routeIs('backups.*'),
+                        'permission' => 'view backups',
+                    ],
                 ],
             ],
         ];
@@ -100,21 +106,21 @@ class MenuService
                 'active' => request()->routeIs('chatbot.*') || request()->routeIs('chatbot.*'),
                 'children' => [
                     [
-                        'name' => 'Chatbot Send Message',
+                        'name' => 'Chatbot introduction',
                         'url' => route('chatbot.index'),
-                        'active' => request()->routeIs('chatbot.*'),
+                        'active' => request()->routeIs('chatbot.index'),
                         'permission' => '',
                     ],
                     [
-                        'name' => 'Chatbot Subjects',
-                        'url' => route('chatbot.subjects.index'),
-                        'active' => request()->routeIs('chatbot.subjects.*'),
+                        'name' => 'Run Demo',
+                        'url' => route('chatbot.demo'),
+                        'active' => request()->routeIs('chatbot.demo'),
                         'permission' => '',
                     ],
                     [
                         'name' => 'Chatbot Settings',
                         'url' => route('chatbot.setting.index'),
-                        'active' => request()->routeIs('chatbot.setting.*'),
+                        'active' => request()->routeIs('chatbot.setting.index'),
                         'permission' => '',
                     ],
                 ],

@@ -1,12 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="fw-semibold h4 text-dark mb-0">
-            {{ __('Cập nhật Yêu Cầu Liên Hệ') }} #{{ $contact->id }}
+            {{ __('Update Contact Request') }} #{{ $contact->id }}
         </h2>
     </x-slot>
 
     <div class="py-4">
         <div class="container">
+
+            <x-alert-message />
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
 
@@ -19,7 +21,7 @@
 
                     @if ($errors->any())
                         <div class="alert alert-danger mb-4" role="alert">
-                            <div class="fw-semibold mb-2">Có lỗi xảy ra:</div>
+                            <div class="fw-semibold mb-2">{{ __('An error occurred:') }}</div>
                             <ul class="mb-0 ps-3">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -34,7 +36,7 @@
 
                         <div class="mb-4">
                             <label class="form-label fw-semibold">
-                                {{ __('Người gửi') }}:
+                                {{ __('Sender') }}:
                             </label>
                             <p class="mb-0 text-dark">{{ $contact->user->name }} ({{ $contact->user->email }})</p>
                         </div>
@@ -53,14 +55,14 @@
                             <x-input-error :messages="$errors->get('type')" class="mt-2" />
                         </div>
 
-                        {{-- Danh sách module (hiển thị có điều kiện) --}}
+                        {{-- Module list (conditionally displayed) --}}
                         <div id="module-selection-container" class="mb-4"
                             style="display: {{ in_array(old('type', $contact->type), [2, 3]) ? 'block' : 'none' }};">
                             <label for="module_id" class="form-label fw-semibold">
-                                {{ __('Chọn Module bạn quan tâm') }}
+                                {{ __('Select the Module you are interested in') }}
                             </label>
                             <select name="module_id" id="module_id" class="form-select mt-1">
-                                <option value="">{{ __('Không chọn module cụ thể') }}</option>
+                                <option value="">{{ __('No specific module selected') }}</option>
                                 @foreach ($modules as $module)
                                     <option value="{{ $module->id }}"
                                         {{ old('module_id', $contact->module_id) == $module->id ? 'selected' : '' }}>
@@ -94,7 +96,7 @@
 
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary text-uppercase fw-semibold text-xs">
-                                {{ __('Cập nhật Yêu Cầu') }}
+                                {{ __('Update Request') }}
                             </button>
                         </div>
                     </form>

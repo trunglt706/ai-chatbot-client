@@ -5,17 +5,47 @@
 
     <div class="py-4">
         <div class="container">
+
+            <x-alert-message />
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <form method="POST" action="{{ route('roles.update', $role->id) }}">
                         @csrf
                         @method('PUT')
 
-                        <div class="mb-4">
-                            <x-input-label required for="name" :value="__('Role Name')" />
-                            <x-text-input id="name" class="form-control mt-1" type="text" name="name"
-                                :value="old('name', $role->name)" required autofocus />
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        <div class="row">
+                            <div class="col-md-7 mb-4">
+                                <x-input-label required for="name" :value="__('Role Name')" />
+                                <x-text-input id="name" class="form-control mt-1" type="text" name="name"
+                                    :value="old('name', $role->name)" required autofocus />
+                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                            </div>
+                            <div class="col-md-5 mb-4">
+                                <x-input-label for="parent_id" :value="__('Parent Role')" />
+                                <select class="form-select" id="parent_id" name="parent_id">
+                                    <option value="">-- {{ __('None') }} --</option>
+                                    @foreach ($roles as $parentRole)
+                                        <option value="{{ $parentRole->id }}"
+                                            {{ old('parent_id', $role->parent_id) == $parentRole->id ? 'selected' : '' }}>
+                                            {{ $parentRole->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="can_view_child_data"
+                                name="can_view_child_data" value="1"
+                                {{ old('can_view_child_data', true) ? 'checked' : '' }}>
+
+                            <x-input-label for="can_view_child_data" :value="__('Can view child data')" />
+                        </div>
+
+                        <div class="mb-4 form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="is_active" name="is_active"
+                                value="1" {{ old('is_active', $role->is_active) ? 'checked' : '' }}>
+                            <x-input-label for="is_active" :value="__('Active')" />
                         </div>
 
                         <div class="mb-4">

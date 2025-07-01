@@ -4,10 +4,9 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\SlackMessage;
 
-class TestSlackNotification extends Notification implements ShouldQueue
+class TestSlackNotification extends Notification
 {
     use Queueable;
 

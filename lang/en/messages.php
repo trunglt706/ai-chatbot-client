@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'version' => 'Version',
     'user_management' => 'User Management',
     'role_management' => 'Role Management',
     'permission_management' => 'Permission Management',

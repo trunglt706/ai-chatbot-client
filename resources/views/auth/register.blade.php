@@ -40,7 +40,7 @@
             <div class="d-flex align-items-center mb-2">
                 <div class="captcha-image me-3">{!! captcha_img('flat') !!}</div>
                 <button type="button" class="btn btn-outline-secondary btn-sm refresh-captcha-btn">
-                    {{ __('Refresh Captcha') }}
+                    <i class="bi bi-arrow-clockwise"></i> {{ __('Refresh Captcha') }}
                 </button>
             </div>
             <x-text-input id="captcha" class="form-control" type="text" name="captcha" required />
@@ -49,10 +49,10 @@
 
         <div class="d-flex justify-content-between align-items-center mt-4">
             <a class="text-decoration-none small" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+                <i class="bi bi-sign-turn-left"></i> {{ __('Already registered?') }}
             </a>
             <x-primary-button class="btn btn-primary">
-                {{ __('Register') }}
+                <i class="bi bi-pencil"></i> {{ __('Register') }}
             </x-primary-button>
         </div>
     </form>

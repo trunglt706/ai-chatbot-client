@@ -28,7 +28,7 @@
             <div class="d-flex align-items-center mb-2">
                 <div class="captcha-image me-3">{!! captcha_img('flat') !!}</div>
                 <button type="button" class="btn btn-outline-secondary btn-sm refresh-captcha-btn">
-                    {{ __('Refresh Captcha') }}
+                    <i class="bi bi-arrow-clockwise"></i> {{ __('Refresh Captcha') }}
                 </button>
             </div>
             <input type="text" id="captcha" name="captcha" required

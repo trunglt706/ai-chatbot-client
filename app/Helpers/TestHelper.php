@@ -195,13 +195,13 @@ if (!function_exists('test_broadcast_service')) {
                 // Giả định bạn đã tạo event TestBroadcastEvent
                 event(new TestBroadcastEvent('Test message from admin panel.'));
                 $result['status'] = 'success';
-                $result['message'] = 'Broadcast event dispatched successfully (via ' . ucfirst($driver) . '). Check your broadcasting logs/dashboard for real-time verification.';
+                $result['message'] = __('Broadcast event dispatched successfully (via :driver). Check your broadcasting logs/dashboard for real-time verification.', ['driver' => ucfirst($driver)]);
             } catch (Exception $e) {
-                $result['message'] = 'Failed to dispatch broadcast event: ' . $e->getMessage();
+                $result['message'] = __('Failed to dispatch broadcast event:') . $e->getMessage();
                 Log::error('Broadcast test failed: ' . $e->getMessage());
             }
         } else {
-            $result['message'] = 'Broadcasting driver is set to "' . $driver . '". Live testing is not applicable or requires specific setup.';
+            $result['message'] = __('Broadcasting driver is set to :driver. Live testing is not applicable or requires specific setup.', ['driver' => $driver]);
         }
         return $result;
     }
@@ -221,9 +221,9 @@ if (!function_exists('test_email_service')) {
                 $message->to($recipient)
                     ->subject('Laravel Email Test from Admin Panel');
             });
-            $result = ['status' => 'success', 'message' => 'Test email sent successfully to ' . $recipient . '. Please check your inbox.'];
+            $result = ['status' => 'success', 'message' => __('Test email sent successfully to :recipient. Please check your inbox.', ['recipient' => $recipient])];
         } catch (Exception $e) {
-            $result = ['status' => 'error', 'message' => 'Failed to send test email: ' . $e->getMessage()];
+            $result = ['status' => 'error', 'message' => __('Failed to send test email:') . $e->getMessage()];
             Log::error('Email test failed: ' . $e->getMessage());
         }
         return $result;
@@ -239,12 +239,12 @@ if (!function_exists('test_slack_service')) {
     function test_slack_service(): array
     {
         try {
-            $notifiable = new NotifiableDummy();
-            Notification::send($notifiable, new TestSlackNotification('Test message from admin panel.'));
+            Notification::route('slack', config('services.slack.webhook_url'))
+                ->notify(new TestSlackNotification('Test message from admin panel.'));
 
-            $result = ['status' => 'success', 'message' => 'Test Slack notification dispatched successfully. Check your Slack channel.'];
+            $result = ['status' => 'success', 'message' => __('Test Slack notification dispatched successfully. Check your Slack channel.')];
         } catch (Exception $e) {
-            $result = ['status' => 'error', 'message' => 'Failed to send Slack notification: ' . $e->getMessage()];
+            $result = ['status' => 'error', 'message' => __('Failed to send Slack notification:') . $e->getMessage()];
             Log::error('Slack test failed: ' . $e->getMessage());
         }
         return $result;

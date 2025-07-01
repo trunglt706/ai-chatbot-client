@@ -1,0 +1,134 @@
+.chat-container {
+  display: flex;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.suggestion-box {
+  width: 35%;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.suggestion-title {
+  margin-bottom: 12px;
+}
+
+.suggestion-list {
+  list-style: none;
+  padding: 0;
+}
+
+.suggestion-item {
+  margin-bottom: 10px;
+  background-color: #f1f1f1;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.chatbox {
+  width: 65%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.user-msg {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.bot-msg {
+  background-color: #d1e7dd;
+  color: #333;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.bot-msg.typing {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.chat-message-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.chat-message-row.left {
+  justify-content: flex-start;
+}
+
+.chat-message-row.right {
+  justify-content: flex-end;
+}
+
+.icon {
+  font-size: 20px;
+  margin: 0 8px;
+}
+
+.chat-input {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.chat-input input:focus {
+  outline: none;
+}
+
+.chat-input button {
+  padding: 10px 20px;
+  background-color: #0984e3;
+  color: white;
+  border: none;
+  border-right: 1px solid #fff;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+  background-color: #74b9ff;
+}
+
+.text-danger {
+  color: red;
+}
+
+.text-success {
+  color: green;
+}
+
+.system-msg {
+  text-align: center;
+  font-style: italic;
+  color: #888;
+  margin: 10px 0;
+}

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-breadcrumb :items="[['name' => 'Sponsors']]" />
+        <x-breadcrumb :items="[['name' => __('Sponsors')]]" />
     </x-slot>
 
     <div class="py-4">
@@ -10,9 +10,15 @@
 
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
-                    <div class="d-flex justify-content-end mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex align-items-center">
+                            <form action="{{ route('sponsors.index') }}" method="GET" class="d-flex">
+                                <x-text-input value="{{ $search }}" id="search" class="form-control"
+                                    name="search" placeholder="Search" />
+                            </form>
+                        </div>
                         @can('create sponsors')
-                            <x-href-button url="{{ route('sponsors.create') }}" name="Add New Sponsor" />
+                            <x-href-button icon="bi bi-plus" url="{{ route('sponsors.create') }}" name="Add New" />
                         @endcan
                     </div>
 
@@ -20,16 +26,24 @@
                         <table class="table align-middle table-hover text-nowrap">
                             <thead class="table-light">
                                 <tr>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Code') }}
+                                    </th>
                                     <th scope="col" class="text-start text-uppercase small fw-bold">
-                                        {{ __('Mã') }}</th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">
-                                        {{ __('Tên') }}</th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">
-                                        {{ __('Hình ảnh') }}</th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">
-                                        {{ __('Trạng thái') }}</th>
+                                        {{ __('Name') }}
+                                    </th>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Image') }}
+                                    </th>
                                     <th scope="col" class="text-center text-uppercase small fw-bold">
-                                        {{ __('Hành động') }}</th>
+                                        {{ __('Modules') }}
+                                    </th>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Status') }}
+                                    </th>
+                                    <th scope="col" width="10%" class="text-center text-uppercase small fw-bold">
+                                        {{ __('Actions') }}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,14 +52,15 @@
                                         <td>{{ $sponsor->code }}</td>
                                         <td>{{ $sponsor->name }}</td>
                                         <td>
-                                            @if ($sponsor->image)
-                                                <img src="{{ Storage::url($sponsor->image) }}"
-                                                    alt="{{ $sponsor->name }}" class="rounded-circle object-fit-contain"
-                                                    style="height: 40px; width: 40px;">
+                                            @if ($sponsor->logo_url)
+                                                <img src="{{ $sponsor->logo_url }}" alt="{{ $sponsor->name }} Logo"
+                                                    class="img-thumbnail"
+                                                    style="width: 50px; height: 50px; object-fit: contain;">
                                             @else
-                                                {{ __('Không có ảnh') }}
+                                                <i class="bi bi-image-fill text-muted" style="font-size: 2rem;"></i>
                                             @endif
                                         </td>
+                                        <td class="text-center">{{ $sponsor->modules()->count() }}</td>
                                         <td>
                                             <span
                                                 class="badge rounded-pill
@@ -62,8 +77,7 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <form action="{{ route('sponsors.destroy', $sponsor) }}" method="POST"
-                                                class="d-inline"
-                                                onsubmit="return confirm('Bạn có chắc chắn muốn xóa nhà tài trợ này?');">
+                                                class="d-inline" onsubmit="return confirm('@lang('Are you sure you want to delete this sponsor?')');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger"
@@ -75,8 +89,8 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center text-secondary">
-                                            {{ __('Không có nhà tài trợ nào được tìm thấy.') }}
+                                        <td colspan="6" class="text-center text-secondary">
+                                            {{ __('No data.') }}
                                         </td>
                                     </tr>
                                 @endforelse

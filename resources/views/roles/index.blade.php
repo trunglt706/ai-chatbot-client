@@ -12,21 +12,28 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="d-flex align-items-center">
-                            <x-text-input id="search" class="form-control" name="search" placeholder="Search" />
+                            <form action="{{ route('roles.index') }}" method="GET" class="d-flex">
+                                <x-text-input value="{{ $search }}" id="search" class="form-control"
+                                    name="search" placeholder="Search" />
+                            </form>
                         </div>
-                        @can('create roles')
-                            <x-href-button icon="bi bi-plus" url="{{ route('roles.create') }}" name="Add New" />
-                        @endcan
+                        <div class="btn-group">
+                            @can('create roles')
+                                <x-href-button icon="bi bi-plus" url="{{ route('roles.create') }}" name="Add New" />
+                            @endcan
+                            <x-href-button class="btn-secondary" icon="bi bi-sort-down" url="{{ route('roles.order') }}"
+                                name="Order Roles" />
+                        </div>
                     </div>
 
                     <div class="table-responsive">
                         <table class="table align-middle table-hover text-nowrap">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
                                         @lang('Name')
                                     </th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
                                         @lang('Permissions')
                                     </th>
                                     <th scope="col" class="text-center text-uppercase small fw-bold">

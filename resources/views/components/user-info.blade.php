@@ -1,3 +1,17 @@
+@php
+    use App\Services\UserService;
+    $userService = new UserService();
+    $currentUserOnlineStatus = $userService->isUserOnline($user);
+
+    $isOnline = $currentUserOnlineStatus['is_online'];
+    $lastActivity = $currentUserOnlineStatus['last_activity_at'];
+
+    if ($lastActivity) {
+        $tooltipText = __('Last activity') . ': ' . $lastActivity->format('d M Y, H:i:s');
+    } else {
+        $tooltipText = __('No recent activity');
+    }
+@endphp
 <div>
     <div class="px-4 py-1 bg-white shadow rounded h-100">
         <div class="mx-auto" style="max-width: 36rem;">
@@ -8,9 +22,13 @@
                             <x-input-label for="code" :value="__('User Code')" />
                         </div>
                         <div class="col-6 text-end">
-                            <p id="code" class="mb-0 small text-dark">
+                            <span id="code" class="mb-0 small text-dark">
                                 {{ $user->code ?? __('N/A') }}
-                            </p>
+                            </span>
+                            <span class="badge p-1 {{ $isOnline ? 'bg-success' : 'bg-secondary' }}"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $tooltipText }}">
+                                {{ $isOnline ? __('On') : __('Off') }}
+                            </span>
                         </div>
                     </div>
 
@@ -71,7 +89,8 @@
                         <div class="col-6 text-end">
                             <ul class="list-unstyled mb-0">
                                 @forelse ($user->socialAccounts as $socialAccount)
-                                    <li class="d-flex align-items-center text-secondary mb-1 text-nowrap">
+                                    <li
+                                        class="d-flex align-items-center justify-content-end text-secondary mb-1 text-nowrap">
                                         @if ($socialAccount->provider_name === 'google')
                                             <img src="https://www.google.com/favicon.ico" alt="Google" class="me-2"
                                                 style="width: 20px; height: 20px;">

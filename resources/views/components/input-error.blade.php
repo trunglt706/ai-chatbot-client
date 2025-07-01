@@ -1,4 +1,4 @@
-@props(['messages'])
+@props(['messages' => null])
 
 @if ($messages)
     <ul {{ $attributes->merge(['class' => 'text-danger small mb-1 list-unstyled']) }}>

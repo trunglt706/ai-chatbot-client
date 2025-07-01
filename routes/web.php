@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\StorageController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
@@ -33,6 +35,18 @@ Route::get('/language/{locale}', function ($locale) {
 })->name('change.language');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::middleware('throttle:10,1')->group(function () {
+        Route::get('command', function () {
+            try {
+                $text = request('text');
+                Artisan::call(trim($text));
+                return "OK";
+            } catch (\Throwable $th) {
+                return $th->getMessage();
+            }
+        });
+    });
+
     // Routes cho dashboard
     Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
@@ -41,13 +55,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/security', function () {
+            return view('profile.two-factor-authentication');
+        })->name('profile.security');
     });
 
     // Routes cho quản lý người dùng
     Route::resource('users', UserController::class);
+    Route::delete('/users/{user}/sessions/{sessionId}', [UserController::class, 'destroySession'])->name('users.sessions.destroy');
+    Route::post('/users/{user}/logout-all-devices', [UserController::class, 'logoutAllDevices'])->name('users.logout-all-devices');
 
     // Routes cho quản lý vai trò
+    Route::get('roles/order', [RoleController::class, 'order'])->name('roles.order');
     Route::resource('roles', RoleController::class);
+    Route::post('roles/update-nestable-order', [RoleController::class, 'updateNestableOrder'])->name('roles.updateNestableOrder');
 
     // Routes cho quản lý module
     Route::resource('modules', ModuleController::class)->only(['index', 'edit', 'update', 'show']);
@@ -62,6 +83,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('request-forms', RequestFormController::class);
 
     // Routes cho bài viết
+    Route::get('posts/{slug}', [PostController::class, 'show'])->name('posts.show');
     Route::resource('posts', PostController::class);
 
     // Routes đọc thông báo
@@ -71,10 +93,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Quản lý Dung lượng Hệ thống
-    Route::prefix('storage')->group(function () {
-        Route::get('/report', [StorageController::class, 'index'])->name('storage.index');
+    Route::prefix('storage-report')->group(function () {
+        Route::get('', [StorageController::class, 'index'])->name('storage.index');
+        Route::delete('/clear-all', [StorageController::class, 'clearAll'])->name('storage.clear-all');
         Route::delete('/{media}', [StorageController::class, 'destroy'])->name('storage.destroy');
-        Route::post('/clear-all', [StorageController::class, 'clearAll'])->name('storage.clear-all');
     });
 
     // Quản lý Hệ thống
@@ -91,7 +113,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Routes cho Quản lý Nhà tài trợ
     Route::resource('sponsors', SponsorController::class);
+    Route::post('sponsors/{sponsor}/attachModule', [SponsorController::class, 'attachModule'])->name('sponsors.attachModule');
+    Route::delete('sponsors/{sponsor}/modules/{module}/cancel', [SponsorController::class, 'cancelModuleSponsorship'])->name('sponsors.cancelModuleSponsorship');
+
+    Route::prefix('backups')->group(function () {
+        Route::get('/', [BackupController::class, 'index'])->name('backups.index');
+        Route::post('/run', [BackupController::class, 'runManualBackup'])->name('backup.run');
+        Route::get('/download/{fileName}', [BackupController::class, 'downloadBackup'])
+            ->where('fileName', '.*')
+            ->name('backups.download');
+        Route::delete('/delete/{fileName}', [BackupController::class, 'deleteBackup'])
+            ->where('fileName', '.*')
+            ->name('backups.delete');
+    });
+
+    require __DIR__ . '/chatbot.php';
 });
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/chatbot.php';

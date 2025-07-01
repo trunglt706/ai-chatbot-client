@@ -20,10 +20,10 @@ class ModuleService
     public static function getStatus(): array
     {
         return [
-            self::STATUS_DEVELOPING => 'Đang phát triển',
-            self::STATUS_PUBLISHED => 'Đang phát hành',
-            self::STATUS_PAUSED => 'Tạm dừng',
-            self::STATUS_DISCONTINUED => 'Ngừng phát hành',
+            self::STATUS_DEVELOPING => __('Developing'),
+            self::STATUS_PUBLISHED => __('Published'),
+            self::STATUS_PAUSED => __('Pause'),
+            self::STATUS_DISCONTINUED => __('Discontinued'),
         ];
     }
 
@@ -171,7 +171,7 @@ class ModuleService
             ->causedBy(Auth::user() ?: null)
             ->withProperties([
                 'module_name' => $module->name,
-                'status' => Module::getStatuses()[$module->status] ?? __('Unknown'),
+                'status' => $this->getStatus()[$module->status] ?? __('Unknown'),
             ])
             ->log($description);
     }

@@ -24,20 +24,20 @@ class ContactService
     public static function getFormTypes(): array
     {
         return [
-            self::TYPE_PROJECT_COLLABORATION => 'Đăng ký hợp tác dự án',
-            self::TYPE_MODULE_SPONSORSHIP => 'Đăng ký nhà tài trợ module',
-            self::TYPE_MODULE_DEMO => 'Đăng ký demo module',
-            self::TYPE_OTHER => 'Khác',
+            self::TYPE_PROJECT_COLLABORATION => __('Register Project Collaboration'),
+            self::TYPE_MODULE_SPONSORSHIP => __('Register Sponsor'),
+            self::TYPE_MODULE_DEMO => __('Register Demo'),
+            self::TYPE_OTHER => __("Other"),
         ];
     }
 
     public static function getStatus(): array
     {
         return [
-            self::STATUS_NEW => 'Mới',
-            self::STATUS_IN_PROGRESS => 'Đang xử lý',
-            self::STATUS_COMPLETED => 'Đã hoàn thành',
-            self::STATUS_CANCELED => 'Đã hủy',
+            self::STATUS_NEW => __('New'),
+            self::STATUS_IN_PROGRESS => __('In Progress'),
+            self::STATUS_COMPLETED => __('Completed'),
+            self::STATUS_CANCELED => __('Cancelled'),
         ];
     }
 

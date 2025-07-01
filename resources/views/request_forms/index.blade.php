@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="fw-semibold h4 text-dark mb-0">
-            {{ __('Danh sách Yêu Cầu Liên Hệ') }}
+            {{ __('Contact Request List') }}
         </h2>
     </x-slot>
 
@@ -16,13 +16,20 @@
                         <table class="table align-middle table-hover text-nowrap">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">ID</th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">Người gửi</th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">Phân loại</th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">Module</th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">Trạng thái</th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">Ngày tạo</th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">Hành động</th>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">ID
+                                    </th>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Sender') }}</th>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Category') }}</th>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Module') }}</th>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Status') }}</th>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Created At') }}</th>
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        {{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,21 +39,24 @@
                                             {{ $contact->id }}
                                         </td>
                                         <td>
-                                            {{ $contact->user->name ?? 'N/A' }} ({{ $contact->user->email ?? 'N/A' }})
+                                            {{ $contact->user->name ?? __('N/A') }}
+                                            ({{ $contact->user->email ?? __('N/A') }})
                                         </td>
                                         <td>
-                                            {{ \App\Services\ContactService::getFormTypes()[$contact->type] ?? 'Không xác định' }}
+                                            {{ \App\Services\ContactService::getFormTypes()[$contact->type] ?? __('Unknown') }}
                                         </td>
                                         <td>
-                                            {{ $contact->module->name ?? 'Không áp dụng' }}
+                                            {{ $contact->module->name ?? __('Not applicable') }}
                                         </td>
                                         <td>
                                             @php
                                                 $statusMap = [
-                                                    \App\Services\ContactService::STATUS_NEW => 'Mới',
-                                                    \App\Services\ContactService::STATUS_IN_PROGRESS => 'Đang xử lý',
-                                                    \App\Services\ContactService::STATUS_COMPLETED => 'Đã hoàn thành',
-                                                    \App\Services\ContactService::STATUS_CANCELED => 'Đã hủy',
+                                                    \App\Services\ContactService::STATUS_NEW => __('New'),
+                                                    \App\Services\ContactService::STATUS_IN_PROGRESS => __(
+                                                        'In Progress',
+                                                    ),
+                                                    \App\Services\ContactService::STATUS_COMPLETED => __('Completed'),
+                                                    \App\Services\ContactService::STATUS_CANCELED => __('Canceled'),
                                                 ];
                                             @endphp
                                             <span
@@ -56,7 +66,7 @@
                                                 @elseif($contact->status == \App\Services\ContactService::STATUS_COMPLETED) bg-success
                                                 @elseif($contact->status == \App\Services\ContactService::STATUS_CANCELED) bg-danger
                                                 @else bg-secondary @endif">
-                                                {{ $statusMap[$contact->status] ?? 'Không xác định' }}
+                                                {{ $statusMap[$contact->status] ?? __('Unknown') }}
                                             </span>
                                         </td>
                                         <td>

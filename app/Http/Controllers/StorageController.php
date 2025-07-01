@@ -4,17 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\MediaService;
-use App\Models\Media;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class StorageController extends Controller
 {
-    protected $mediaService;
 
-    public function __construct(MediaService $mediaService)
+    public function __construct()
     {
         $this->middleware(['auth', 'permission:report log storage'])->only('index', 'destroy', 'clearAll');
-        $this->mediaService = $mediaService;
     }
 
     /**
@@ -22,11 +19,12 @@ class StorageController extends Controller
      */
     public function index()
     {
-        $totalFiles = $this->mediaService->getTotalFileCount();
-        $totalSizeInBytes = $this->mediaService->getTotalStorageSize();
-        $allMediaFiles = $this->mediaService->getAllMedia(); // Lấy tất cả media để hiển thị chi tiết
+        $pageSize = request('pageSize', 10);
 
-        $totalSizeReadable = $this->formatBytes($totalSizeInBytes);
+        $totalFiles = Media::count();
+        $totalSizeInBytes = Media::sum('size');
+        $allMediaFiles = Media::paginate($pageSize);
+        $totalSizeReadable = format_size_units($totalSizeInBytes);
 
         return view('storage.index', compact('totalFiles', 'totalSizeReadable', 'allMediaFiles'));
     }
@@ -36,10 +34,12 @@ class StorageController extends Controller
      */
     public function destroy(Media $media)
     {
-        if ($this->mediaService->deleteMedia($media)) {
-            return redirect()->route('storage.index')->with('success', 'Tập tin đã được xóa thành công!');
+        try {
+            $media->delete();
+            return redirect()->route('storage.index')->with('success', __('The file has been deleted successfully!'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', __('Unable to delete the file.'));
         }
-        return redirect()->back()->with('error', 'Không thể xóa tập tin.');
     }
 
     /**
@@ -47,24 +47,13 @@ class StorageController extends Controller
      */
     public function clearAll(Request $request)
     {
-        if ($this->mediaService->clearAllMedia()) {
-            return redirect()->route('storage.index')->with('success', 'Tất cả dữ liệu media đã được xóa thành công!');
+        try {
+            Media::all()->each(function ($media) {
+                $media->delete();
+            });
+            return redirect()->route('storage.index')->with('success', __('All media data has been deleted successfully!'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', __('Unable to delete all media data.'));
         }
-        return redirect()->back()->with('error', 'Không thể xóa tất cả dữ liệu media.');
-    }
-
-    /**
-     * Helper to format bytes into human readable format.
-     */
-    protected function formatBytes($bytes, $precision = 2)
-    {
-        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
-        $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
-
-        $bytes /= (1 << (10 * $pow));
-
-        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }

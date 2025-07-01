@@ -7,6 +7,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "jenssegers/agent": "^2.6",
+        "laravel/fortify": "^1.27",
         "laravel/framework": "^12.0",
         "laravel/slack-notification-channel": "^3.5",
         "laravel/socialite": "^5.21",
@@ -16,6 +18,8 @@
         "pusher/pusher-php-server": "~7.0",
         "rap2hpoutre/laravel-log-viewer": "^2.5",
         "spatie/laravel-activitylog": "^4.10",
+        "spatie/laravel-backup": "^9.3",
+        "spatie/laravel-medialibrary": "^11.13",
         "spatie/laravel-permission": "^6.20"
     },
     "require-dev": {

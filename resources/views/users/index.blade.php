@@ -12,7 +12,10 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="d-flex align-items-center">
-                            <x-text-input id="search" class="form-control" name="search" placeholder="Search" />
+                            <form action="{{ route('users.index') }}" method="GET" class="d-flex">
+                                <x-text-input value="{{ $search }}" id="search" class="form-control"
+                                    name="search" placeholder="Search" />
+                            </form>
                         </div>
                         @can('create users')
                             <x-href-button icon="bi bi-plus" url="{{ route('users.create') }}" name="Add New" />
@@ -23,15 +26,20 @@
                         <table class="table align-middle table-hover text-nowrap">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">@lang('Name')
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        @lang('Name')
                                     </th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">@lang('Email')
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        @lang('Email')
                                     </th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">@lang('Roles')
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        @lang('Roles')
                                     </th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">@lang('Created At')
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        @lang('Created At')
                                     </th>
-                                    <th scope="col" class="text-start text-uppercase small fw-bold">@lang('Status')
+                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                        @lang('Status')
                                     </th>
                                     <th scope="col" class="text-center text-uppercase small fw-bold">
                                         @lang('Actions')
@@ -41,7 +49,31 @@
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
-                                        <td>{{ $user->name }}</td>
+                                        <td>
+                                            {{ $user->name }}
+                                            @php
+                                                $statusInfo = $onlineStatuses[$user->id] ?? [
+                                                    'is_online' => false,
+                                                    'last_activity_at' => null,
+                                                ];
+                                                $isOnline = $statusInfo['is_online'];
+                                                $lastActivity = $statusInfo['last_activity_at'];
+
+                                                if ($lastActivity) {
+                                                    $tooltipText =
+                                                        __('Last activity') .
+                                                        ': ' .
+                                                        $lastActivity->format('d M Y, H:i:s');
+                                                } else {
+                                                    $tooltipText = __('No recent activity');
+                                                }
+                                            @endphp
+                                            <span class="badge {{ $isOnline ? 'bg-success' : 'bg-secondary' }}"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="{{ $tooltipText }}">
+                                                {{ $isOnline ? __('On') : __('Off') }}
+                                            </span>
+                                        </td>
                                         <td>{{ $user->email }}</td>
                                         <td>
                                             @foreach ($user->roles as $role)
@@ -59,7 +91,7 @@
                                                 @if ($user->status === 'active') bg-success
                                                 @elseif($user->status === 'blocked') bg-danger
                                                 @else bg-warning text-dark @endif">
-                                                {{ $user->status ? __(ucfirst($user->status)) : 'N/A' }}
+                                                {{ $user->status ? __(ucfirst($user->status)) : __('N/A') }}
                                             </span>
                                         </td>
                                         <td class="text-center">

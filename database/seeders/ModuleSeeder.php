@@ -14,7 +14,7 @@ class ModuleSeeder extends Seeder
     public function run(): void
     {
         $modules = [
-            ['code' => 'chatbot', 'name' => 'Chatbot', 'status' => 2, 'version' => '1.0.0'],
+            ['code' => 'chatbot', 'name' => 'Chatbot', 'status' => 2, 'version' => '1.0.2', 'url' => '/chatbot'],
         ];
 
         foreach ($modules as $moduleData) {

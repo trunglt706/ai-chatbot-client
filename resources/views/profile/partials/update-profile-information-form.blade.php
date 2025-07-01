@@ -63,7 +63,7 @@
 
         <div class="d-flex align-items-center gap-3">
             <button type="submit" class="btn btn-primary">
-                {{ __('Save') }}
+                <i class="bi bi-floppy-fill"></i> {{ __('Save') }}
             </button>
 
             @if (session('status') === 'profile-updated')

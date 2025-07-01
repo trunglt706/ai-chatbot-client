@@ -59,10 +59,10 @@ class SystemController extends Controller
     {
         try {
             Artisan::call('storage:link');
-            return redirect()->route('system.index')->with('success', 'Symbolic link đã được tạo thành công.');
+            return redirect()->route('system.index')->with('success', __('Symbolic link has been created successfully.'));
         } catch (Exception $e) {
             Log::error('Failed to create storage link: ' . $e->getMessage());
-            return redirect()->route('system.index')->with('error', 'Không thể tạo symbolic link: ' . $e->getMessage());
+            return redirect()->route('system.index')->with('error', __('Unable to create symbolic link:') . $e->getMessage());
         }
     }
 
@@ -75,10 +75,10 @@ class SystemController extends Controller
             Artisan::call('view:clear');
             Artisan::call('optimize:clear');
 
-            return redirect()->route('system.index')->with('success', 'Toàn bộ cache hệ thống đã được xóa thành công.');
+            return redirect()->route('system.index')->with('success', __('All system cache has been cleared successfully.'));
         } catch (Exception $e) {
             Log::error('Failed to clear cache: ' . $e->getMessage());
-            return redirect()->route('system.index')->with('error', 'Không thể xóa cache hệ thống: ' . $e->getMessage());
+            return redirect()->route('system.index')->with('error', __('Unable to clear system cache:') . $e->getMessage());
         }
     }
 

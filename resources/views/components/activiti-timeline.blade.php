@@ -1,5 +1,4 @@
 @props(['activities'])
-
 <ol class="list-group list-group-flush border-start border-2 border-secondary ps-1">
     @forelse ($activities as $activity)
         <li class="list-group-item ps-4 position-relative border-0">
@@ -25,14 +24,22 @@
                         @if ($key == 'old')
                             @foreach ($value as $propKey => $propValue)
                                 <p class="mb-0"><strong>@lang('changed')</strong> {{ $propKey }}
-                                    @lang('from') "{{ $propValue }}" @lang('to')
-                                    "{{ $activity->properties['attributes'][$propKey] ?? 'N/A' }}"
+                                    @lang('from')
+                                    "{{ is_array($propValue) ? implode(', ', $propValue) : $propValue }}"
+                                    @lang('to')
+                                    "{{ is_array($activity->properties['attributes'][$propKey] ?? null)
+                                        ? implode(', ', $activity->properties['attributes'][$propKey])
+                                        : $activity->properties['attributes'][$propKey] ?? __('N/A') }}"
                                 </p>
                             @endforeach
                         @elseif ($key == 'attributes' && !$activity->properties->has('old'))
                             @foreach ($value as $propKey => $propValue)
                                 <p class="mb-0"><strong>@lang('set')</strong>: {{ $propKey }}
-                                    @lang('to') "{{ $propValue }}"</p>
+                                    @lang('to')
+                                    "{{ is_array($activity->properties['attributes'][$propKey] ?? null)
+                                        ? implode(', ', $activity->properties['attributes'][$propKey])
+                                        : $activity->properties['attributes'][$propKey] ?? __('N/A') }}"
+                                </p>
                             @endforeach
                         @endif
                     @endforeach

@@ -21,7 +21,7 @@
 
         <div class="mb-3">
             <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="form-control mt-1"
+            <x-text-input id="update_password_password" name="password" type="password" class="form-control"
                 autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
@@ -29,7 +29,7 @@
         <div class="mb-3">
             <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
             <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password"
-                class="form-control mt-1" autocomplete="new-password" />
+                class="form-control" autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
@@ -38,9 +38,8 @@
             <div class="d-flex align-items-center mb-2">
                 {{-- Hiển thị hình ảnh Captcha --}}
                 <div class="captcha-image me-3">{!! captcha_img('flat') !!}</div>
-                {{-- Nút refresh Captcha --}}
-                <button type="button" class="btn btn-link p-0 text-decoration-none refresh-captcha-btn">
-                    {{ __('Refresh Captcha') }}
+                <button type="button" class="btn btn-outline-secondary btn-sm refresh-captcha-btn">
+                    <i class="bi bi-arrow-clockwise"></i> {{ __('Refresh Captcha') }}
                 </button>
             </div>
             <x-text-input id="captcha" class="form-control mt-1" type="text" name="captcha" required />
@@ -48,7 +47,9 @@
         </div>
 
         <div class="d-flex align-items-center gap-3">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button>
+                <i class="bi bi-floppy-fill"></i> {{ __('Save') }}
+            </x-primary-button>
 
             @if (session('status') === 'password-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"

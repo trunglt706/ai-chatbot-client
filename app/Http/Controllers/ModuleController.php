@@ -34,8 +34,8 @@ class ModuleController extends Controller
      */
     public function edit(Module $module)
     {
-        $status = $this->moduleService->getStatus();
-        return view('modules.edit', compact('module', 'status'));
+        $statuses = $this->moduleService->getStatus();
+        return view('modules.edit', compact('module', 'statuses'));
     }
 
     /**
@@ -51,7 +51,7 @@ class ModuleController extends Controller
                 Rule::unique('modules')->ignore($module->id),
             ],
             'code' => [
-                'required',
+                'nullable',
                 'string',
                 'max:255',
                 Rule::unique('modules')->ignore($module->id),

@@ -5,6 +5,8 @@
 
     <div class="py-4">
         <div class="container">
+
+            <x-alert-message />
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <form method="POST" action="{{ route('users.store') }}">

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'version' => 'Phiên bản',
     'user_management' => 'Quản lý Người dùng',
     'role_management' => 'Quản lý Vai trò',
     'permission_management' => 'Quản lý Quyền',

@@ -70,7 +70,7 @@ class RequestFormController extends Controller
 
         $this->contactService->createContact($request->all(), Auth::user());
 
-        return redirect()->back()->with('success', 'Yêu cầu của bạn đã được gửi thành công!');
+        return redirect()->back()->with('success', __('Your request has been submitted successfully!'));
     }
 
     /**
@@ -119,6 +119,6 @@ class RequestFormController extends Controller
 
         $this->contactService->updateContact($contact, $request->all(), Auth::user());
 
-        return redirect()->route('request_forms.index')->with('success', 'Yêu cầu liên hệ đã được cập nhật thành công!');
+        return redirect()->route('request_forms.index')->with('success', __('The contact request has been updated successfully!'));
     }
 }

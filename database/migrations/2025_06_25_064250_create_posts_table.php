@@ -16,9 +16,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Bài viết thuộc về user nào
             $table->string('title');
             $table->string('slug')->unique(); // Để tạo URL thân thiện
+            $table->text('description')->nullable();
             $table->longText('content'); // Nội dung bài viết bằng Trix
             $table->boolean('is_published')->default(false); // Trạng thái xuất bản
             $table->timestamp('published_at')->nullable(); // Thời gian xuất bản
+            $table->json('tags')->nullable();
             $table->timestamps();
         });
     }

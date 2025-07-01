@@ -5,6 +5,8 @@
 
     <div class="py-4">
         <div class="container">
+
+            <x-alert-message />
             <div class="row g-4">
                 <div class="col-12 col-lg-8">
                     <div class="card shadow-sm mb-4">

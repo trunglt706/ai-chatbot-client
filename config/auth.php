@@ -112,4 +112,6 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    'online_threshold_minutes' => env('USER_ONLINE_THRESHOLD_MINUTES', 10),
+
 ];

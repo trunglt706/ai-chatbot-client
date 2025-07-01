@@ -1,4 +1,4 @@
-<section class="mb-5">
+<section>
     <header>
         <h2 class="h5 text-dark">
             {{ __('Delete Account') }}
@@ -10,7 +10,7 @@
     </header>
 
     <button type="button" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#confirm-user-deletion">
-        {{ __('Delete Account') }}
+        <i class="bi bi-shield-fill-x"></i> {{ __('Delete Account') }}
     </button>
 
     <!-- Modal -->
@@ -36,7 +36,7 @@
 
                     <div class="form-group mt-3">
                         <label for="password" class="form-label visually-hidden">{{ __('Password') }}</label>
-                        <input id="password" name="password" type="password" class="form-control w-75"
+                        <input id="password" name="password" type="password" class="form-control"
                             placeholder="{{ __('Password') }}">
                         @if ($errors->userDeletion->get('password'))
                             <div class="text-danger mt-2">
