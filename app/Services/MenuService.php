@@ -62,6 +62,7 @@ class MenuService
                         'permission' => 'view posts',
                     ],
                 ],
+                'url' => '#'
             ],
             [
                 'name' => 'System',
@@ -100,6 +101,7 @@ class MenuService
                         'permission' => 'view backups',
                     ],
                 ],
+                'url' => '#'
             ],
         ];
         if (isset($isChatbotModulePublished) && $isChatbotModulePublished) {
@@ -128,6 +130,7 @@ class MenuService
                         'permission' => '',
                     ],
                 ],
+                'url' => '#'
             ]);
         }
         return $menuItems;

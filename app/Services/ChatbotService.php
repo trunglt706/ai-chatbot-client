@@ -303,7 +303,6 @@ class ChatbotService
                 // 'model' => $model,
                 'type' => $type,
             ]);
-            \Log::debug(json_encode($response));
 
             if ($response->successful()) {
                 $rawBotResponse = $response->body();

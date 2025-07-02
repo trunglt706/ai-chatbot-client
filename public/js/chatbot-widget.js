@@ -1,11 +1,11 @@
 (function () {
     // === Cấu hình (Người dùng có thể thay đổi) ===
     const CHATBOT_CONFIG = {
-        apiUrl: "/chat", // THAY THẾ BẰU ĐỊA CHỈ API CỦA BẠN
-        title: "Trò chuyện với chúng tôi!",
-        subtitle: "Chúng tôi ở đây để giúp đỡ.",
+        apiUrl: "/chatbot-auto", // THAY THẾ BẰU ĐỊA CHỈ API CỦA BẠN
+        title: "Trò chuyện với tôi!",
+        subtitle: "Tôi mà Mona Bot.",
         welcomeMessage: "Chào mừng bạn! Tôi có thể giúp gì cho bạn hôm nay?",
-        initialMessagePlaceholder: "Xin chào! Tôi có thể giúp gì cho bạn?",
+        initialMessagePlaceholder: "Xin chào!",
         sendButtonText: "Gửi",
         toggleButtonText: "Chat", // Văn bản hiển thị trên nút toggle
         themeColor: "#4F46E5", // Màu chủ đạo (ví dụ: indigo-600)
@@ -216,6 +216,7 @@
             .mini-chatbot-bot-message {
                 align-self: flex-start; /* Tin nhắn bot căn trái */
                 margin-right: auto;
+                background-color: #fff1e0;
             }
 
             /* Tin nhắn của Người dùng */
@@ -429,26 +430,36 @@
             chatboxBody.appendChild(typingIndicator);
             chatboxBody.scrollTop = chatboxBody.scrollHeight;
 
+            const csrfToken = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
             const response = await fetch(CHATBOT_CONFIG.apiUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
-                    // Thêm các headers khác nếu cần, ví dụ: 'Authorization': 'Bearer YOUR_TOKEN'
+                    "X-CSRF-TOKEN": csrfToken,
                 },
-                body: JSON.stringify({ message: userMessage }),
+                body: JSON.stringify({
+                    question: userMessage,
+                    type: "not_train",
+                }),
             });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
+            const responseData = await response.json();
+            console.log("responseData", responseData);
 
             // Xóa trạng thái đang gõ
             chatboxBody.removeChild(typingIndicator);
 
-            addMessage(data.reply || "Xin lỗi, tôi không hiểu.", "bot"); // `data.reply` là trường chứa câu trả lời từ API của bạn
+            addMessage(
+                responseData?.message || "Xin lỗi, tôi không hiểu.",
+                "bot"
+            ); // `data.reply` là trường chứa câu trả lời từ API của bạn
         } catch (error) {
             console.error("Lỗi khi gửi tin nhắn:", error);
             // Xóa trạng thái đang gõ nếu có lỗi

@@ -49,6 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Routes cho dashboard
     Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::post('chatbot-auto', [HomeController::class, 'chatbotAuto']);
 
     // Routes cho profile
     Route::prefix('profile')->group(function () {

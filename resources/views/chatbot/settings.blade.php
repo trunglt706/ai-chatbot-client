@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="fw-semibold h4 text-dark mb-0">
-            {{ __('Chatbot Settings') }}
-        </h2>
+        <x-breadcrumb :items="[['name' => __('Chatbot Settings')]]" />
     </x-slot>
 
     <div class="py-4">
