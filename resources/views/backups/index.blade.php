@@ -29,9 +29,9 @@
                                         <th>{{ __('File Name') }}</th>
                                         <th>{{ __('Size') }}</th>
                                         <th>{{ __('Date') }}</th>
-                                        <th>{{ __('Type') }}</th>
-                                        <th>{{ __('Disk') }}</th>
-                                        <th>{{ __('Actions') }}</th>
+                                        {{-- <th>{{ __('Type') }}</th> --}}
+                                        <th class="text-center">{{ __('Disk') }}</th>
+                                        <th class="text-center">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,20 +41,19 @@
                                             <td>{{ number_format($backup['size'] / (1024 * 1024), 2) }} MB</td>
                                             {{-- Hiển thị MB --}}
                                             <td>{{ $backup['date']->format('d/m/Y H:i:s') }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 <span
                                                     class="badge bg-{{ isset($backup['type']) && $backup['type'] == 'Manual' ? 'info' : 'secondary' }}">
                                                     {{ isset($backup['type']) ? __($backup['type']) : '' }}
                                                 </span>
-                                            </td>
-                                            <td>{{ $backup['disk'] }}</td>
-                                            <td>
+                                            </td> --}}
+                                            <td class="text-center">{{ $backup['disk'] }}</td>
+                                            <td class="text-center">
                                                 <a href="{{ route('backups.download', ['fileName' => $backup['name']]) }}"
-                                                    class="btn btn-sm btn-outline-success me-2">
+                                                    class="btn btn-sm btn-success me-2">
                                                     <i class="bi bi-download"></i> {{ __('Download') }}
                                                 </a>
-                                                <button type="button"
-                                                    class="btn btn-sm btn-outline-danger delete-backup-btn"
+                                                <button type="button" class="btn btn-sm btn-danger delete-backup-btn"
                                                     data-file-name="{{ $backup['name'] }}" data-bs-toggle="modal"
                                                     data-bs-target="#deleteBackupModal">
                                                     <i class="bi bi-trash"></i> {{ __('Delete') }}

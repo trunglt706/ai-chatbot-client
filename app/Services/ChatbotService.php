@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Chatbot\ChatbotMessage;
 use App\Models\Chatbot\ChatbotSetting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -312,6 +314,14 @@ class ChatbotService
                 // json_decode sẽ trả về chuỗi gốc (ví dụ: "Đây là tiếng Việt").
                 // Nếu nó không phải JSON hợp lệ, json_decode sẽ trả về null.
                 $decodedResponse = json_decode($rawBotResponse);
+
+                ChatbotMessage::create([
+                    'user_id' => Auth::id(),
+                    'ip_address' => request()->ip(),
+                    'content' => $decodedResponse,
+                    'type' => 'bot',
+                    'status' => 'sent',
+                ]);
 
                 // Kiểm tra nếu giải mã thành công và kết quả là một chuỗi
                 if (json_last_error() === JSON_ERROR_NONE && is_string($decodedResponse)) {

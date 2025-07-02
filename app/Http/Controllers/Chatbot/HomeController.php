@@ -50,7 +50,7 @@ class HomeController extends Controller
         $totalMessages = ChatBotMessage::whereUserId($userId)->count();
 
         // Lấy tin nhắn
-        $messages = ChatBotMessage::whereUserId($userId)->whereId(0)
+        $messages = ChatBotMessage::whereUserId($userId)
             ->orderBy('created_at', 'desc')
             ->skip($offset)
             ->take($perPage)
@@ -170,15 +170,6 @@ class HomeController extends Controller
                 }
                 flush();
             }
-
-            $plainBotResponseContent = strip_tags($botResponseAccumulator);
-            ChatbotMessage::create([
-                'user_id' => $userId,
-                'ip_address' => $ip,
-                'content' => $plainBotResponseContent,
-                'type' => 'bot',
-                'status' => 'sent',
-            ]);
         }, 200, [
             'Content-Type' => 'text/event-stream',
             'Cache-Control' => 'no-cache',
