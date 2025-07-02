@@ -38,7 +38,7 @@
             <div class="d-flex align-items-center mb-2">
                 {{-- Hiển thị hình ảnh Captcha --}}
                 <div class="captcha-image me-3">{!! captcha_img('flat') !!}</div>
-                <button type="button" class="btn btn-outline-secondary btn-sm refresh-captcha-btn">
+                <button type="button" class="btn btn-secondary btn-sm refresh-captcha-btn">
                     <i class="bi bi-arrow-clockwise"></i> {{ __('Refresh Captcha') }}
                 </button>
             </div>

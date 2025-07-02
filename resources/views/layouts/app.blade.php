@@ -36,6 +36,26 @@
         <main class="flex-grow-1">
             {{ $slot }}
         </main>
+
+        <footer class="bg-dark text-white py-3 mt-auto">
+            <div class="container d-flex justify-content-between">
+                <div class="mb-0">
+                    &copy; {{ date('Y') }} <a href="https://trunglt706.xyz/profile" target="_blank"
+                        rel="noopener noreferrer" class="text-decoration-none text-white">trunglt706</a>
+                </div>
+                <div class="mb-0">
+                    <a class="text-decoration-none text-white" href="/other/privacy-policy" target="_blank"
+                        rel="noopener noreferrer">
+                        {{ __('Privacy Policy') }}
+                    </a>
+                    |
+                    <a class="text-decoration-none text-white" href="/other/terms-of-service" target="_blank"
+                        rel="noopener noreferrer">
+                        {{ __('Terms of Service') }}
+                    </a>
+                </div>
+            </div>
+        </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -49,7 +69,7 @@
     {{-- Vite JS --}}
     @viteReactRefresh
 
-    @vite(['resources/js/app.jsx']);
+    @vite(['resources/js/app.jsx'])
 </body>
 
 </html>

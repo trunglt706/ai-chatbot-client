@@ -26,7 +26,7 @@
                         <table class="table align-middle table-hover text-nowrap">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                    <th scope="col" class="text-start text-uppercase small fw-bold">
                                         {{ __('Title') }}
                                     </th>
                                     <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
@@ -48,7 +48,7 @@
                                     <tr>
                                         <td>
                                             <a href="{{ route('posts.show', $post->slug) }}"
-                                                class="text-primary text-decoration-underline">
+                                                class="text-primary text-decoration-none">
                                                 {{ Str::limit($post->title, 50) }}
                                             </a>
                                         </td>

@@ -38,7 +38,7 @@ class BackupController extends Controller
                 'size' => $backup->sizeInBytes(),
                 'date' => $backup->date(),
                 'disk' => $status->backupDestination()->diskName(),
-                'type' => in_array('manual', $backup->tags()) ? 'Manual' : 'Auto',
+                // 'type' => in_array('manual', $backup->tags()) ? 'Manual' : 'Auto',
             ];
         }
 

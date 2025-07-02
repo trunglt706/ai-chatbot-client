@@ -30,7 +30,7 @@
                                                     </p>
                                                     <p class="small text-muted mb-3">
                                                         <strong>{{ __('Release Date') }}:</strong>
-                                                        {{ $module->release_date ? $module->release_date->format('d/m/Y') : __('N/A') }}
+                                                        {{ $module->created_at ? $module->created_at->format('d/m/Y') : __('N/A') }}
                                                     </p>
 
                                                     @if ($module->sponsors->isNotEmpty())
@@ -75,7 +75,7 @@
 
                             @if ($publishedPosts->isEmpty())
                                 <p class="text-muted">
-                                    {{ __('No posts have been published yet.') }}</p>
+                                    {{ __('No data.') }}</p>
                             @else
                                 @foreach ($publishedPosts as $post)
                                     <div class="mb-4 pb-3 border-bottom"> {{-- Mỗi bài viết là một khối riêng biệt --}}
@@ -98,18 +98,18 @@
                                             <div class="flex-grow-1"> {{-- flex-grow-1 để nội dung chiếm phần còn lại của không gian --}}
                                                 <h4 class="h6 fw-bold mb-1">
                                                     <a href="{{ route('posts.show', $post->slug) }}"
-                                                        class="link-primary text-decoration-underline">
+                                                        class="link-primary text-decoration-none">
                                                         {{ $post->title }}
                                                     </a>
                                                 </h4>
                                                 <p class="small text-secondary mb-2">
-                                                    {{ __('Published at') }}
+                                                    <i class="bi bi-clock"></i> {{ __('Published at') }}
                                                     {{ $post->published_at?->format('d/m/Y H:i') }}
                                                     {{-- Thêm giờ phút --}}
                                                     {{ __('by') }} {{ $post->user->name ?? __('N/A') }}
                                                 </p>
                                                 <p class="text-muted mb-2">
-                                                    {{ Str::limit($post->short_description, 150) }}
+                                                    {{ Str::limit($post->description, 150) }}
                                                     {{-- Sử dụng short_description và giới hạn độ dài --}}
                                                 </p>
 
@@ -127,23 +127,17 @@
                                     </div>
                                 @endforeach
                             @endif
-
-                            <div class="mt-4 text-end">
-                                <a href="{{ route('posts.index') }}" class="link-primary text-decoration-underline">
-                                    {{ __('View all posts') }} &raquo;
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-lg-3">
                     {{-- Activity Log --}}
-                    <div class="card shadow-sm mb-4">
+                    {{-- <div class="card shadow-sm mb-4">
                         <div class="card-body">
                             <h3 class="h6 fw-semibold mb-4">{{ __('Your Activity Log') }}</h3>
                             <x-activiti-timeline :activities="$userActivities" />
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- Banner --}}
                     <div class="card shadow-sm mb-4">
                         <div class="card-body text-center">

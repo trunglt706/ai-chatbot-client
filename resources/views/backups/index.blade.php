@@ -43,8 +43,8 @@
                                             <td>{{ $backup['date']->format('d/m/Y H:i:s') }}</td>
                                             <td>
                                                 <span
-                                                    class="badge bg-{{ $backup['type'] == 'Manual' ? 'info' : 'secondary' }}">
-                                                    {{ __($backup['type']) }}
+                                                    class="badge bg-{{ isset($backup['type']) && $backup['type'] == 'Manual' ? 'info' : 'secondary' }}">
+                                                    {{ isset($backup['type']) ? __($backup['type']) : '' }}
                                                 </span>
                                             </td>
                                             <td>{{ $backup['disk'] }}</td>

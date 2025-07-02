@@ -23,11 +23,13 @@ class MenuService
                 'url' => route('dashboard'),
                 'icon' => 'bi bi-house',
                 'active' => request()->routeIs('dashboard'),
+                'permission' => 1
             ],
             [
                 'name' => 'Manager Functions',
                 'icon' => 'bi bi-layout-three-columns',
                 'active' => request()->routeIs('users.*') || request()->routeIs('roles.*'),
+                'permission' => auth()->user()->can('view users') || auth()->user()->can('view roles') || auth()->user()->can('view modules') || auth()->user()->can('view sponsors') || auth()->user()->can('view posts'),
                 'children' => [
                     [
                         'name' => 'Users',
@@ -65,6 +67,7 @@ class MenuService
                 'name' => 'System',
                 'icon' => 'bi bi-sliders2',
                 'active' => request()->routeIs('system.*'),
+                'permission' => auth()->user()->can('view activity logs') || auth()->user()->can('view log storage') || auth()->user()->can('manage system') || auth()->user()->can('manage telescope') || auth()->user()->can('view backups'),
                 'children' => [
                     [
                         'name' => 'Activity Logs',
@@ -104,6 +107,7 @@ class MenuService
                 'name' => 'Chatbot',
                 'icon' => 'bi bi-robot',
                 'active' => request()->routeIs('chatbot.*') || request()->routeIs('chatbot.*'),
+                'permission' => 1,
                 'children' => [
                     [
                         'name' => 'Chatbot introduction',

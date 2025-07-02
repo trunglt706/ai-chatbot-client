@@ -4,9 +4,8 @@
             {{ $post->title }}
         </h2>
         <p class="text-muted small mt-1">
-            {{ __('Published by') }} {{ $post->user->name ?? __('N/A') }}
+            <i class="bi bi-clock"></i> {{ __('Published by') }} {{ $post->user->name ?? __('N/A') }}
             {{ __('on') }} {{ $post->published_at?->format('d/m/Y H:i') }}
-            &bull; {{ $post->views }} {{ __('views') }}
         </p>
     </x-slot>
 
@@ -42,7 +41,7 @@
                             {{-- Tags --}}
                             @if (!empty($post->tags))
                                 <div class="mb-4">
-                                    <h5 class="fw-semibold">{{ __('Tags:') }}</h5>
+                                    <h5 class="fw-semibold">{{ __('Tags') }}:</h5>
                                     @foreach ($post->tags as $tag)
                                         <span class="badge bg-primary me-1">{{ $tag }}</span>
                                     @endforeach

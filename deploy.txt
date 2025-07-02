@@ -1,0 +1,64 @@
+==================
+deploy lên server
+
+1/ Cài đặt Apache2 (Web Server):
+sudo apt install apache2 -y
+
+2/ kiểm tra trạng thái Apache2
+sudo systemctl status apache2
+
+3/ Cài đặt MySQL (Database Server):
+sudo apt install mysql-server -y
+
+4/ chạy script bảo mật MySQL:
+sudo mysql_secure_installation
+
+5/Cài đặt PHP CLI:
+sudo apt install php-cli -y
+
+6/ Xác minh cài đặt PHP CLI:
+php -v
+
+7/ cài đặt PHP 8.2 và các extension:
+sudo apt install php8.2 libapache2-mod-php8.2 php8.2-mysql php8.2-mbstring php8.2-xml php8.2-bcmath php8.2-json php8.2-zip php8.2-gd php8.2-curl php8.2-dom php8.2-cli -y
+
+8/ Cài đặt lại Composer
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+
+9/ Tải lên dự án Laravel:
+sudo apt install git -y
+cd /var/www/html/ # Hoặc thư mục bạn muốn chứa dự án
+sudo git clone your_repository_url
+
+10/ Cấp quyền
+sudo chown -R www-data:www-data /var/www/html/chatbotclient
+sudo chmod -R 775 /var/www/html/chatbotclient/storage
+sudo chmod -R 775 /var/www/html/chatbotclient/bootstrap/cache
+
+11/ Cài đặt dependency và cấu hình môi trường:
+cd /var/www/html/my_laravel_project
+sudo composer install --no-dev --optimize-autoloader
+
+sudo cp .env.example .env
+
+sudo php artisan key:generate
+
+12/ Tạo Database và người dùng MySQL:
+sudo mysql -u root -p
+
+CREATE DATABASE ttwork CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE USER 'ttwork'@'localhost' IDENTIFIED BY 'ttwork@#123';
+GRANT ALL PRIVILEGES ON ttwork.* TO 'ttwork'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+
+13/ chạy migration và seeder (nếu có):
+cd /var/www/html/my_laravel_project
+sudo php artisan migrate --force
+# sudo php artisan db:seed # Nếu bạn có seeder
+
+14/ Cấu hình Apache2 cho Laravel (IP:Port 8081)
+
+

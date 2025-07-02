@@ -1,6 +1,6 @@
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     @foreach ($items as $item)
-        @if (!empty($item['children']))
+        @if (!empty($item['children']) && $item['permission'])
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle {{ $item['active'] ? 'active' : '' }}" href="#"
                     id="dropdown-{{ Str::slug($item['name']) }}" role="button" data-bs-toggle="dropdown"

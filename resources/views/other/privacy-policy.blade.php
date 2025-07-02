@@ -167,7 +167,7 @@
             <ul>
                 <li>Họ tên đầy đủ</li>
                 <li>Địa chỉ email liên kết với tài khoản Facebook của bạn</li>
-                <li>Ảnh đại diện cá nhân của bạn</li>
+                {{-- <li>Ảnh đại diện cá nhân của bạn</li> --}}
                 <li>ID người dùng Facebook duy nhất của bạn</li>
             </ul>
 

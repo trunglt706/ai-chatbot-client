@@ -350,5 +350,9 @@
     "No modules have been published yet.": "Chưa có module nào được phát hành.",
     "Run Demo": "Chạy thử",
     "Chatbot introduction": "Giới thiệu",
-    "Chatbot settings updated successfully!": "Cài đặt chatbot đã được cập nhật thành công!"
+    "Chatbot settings updated successfully!": "Cài đặt chatbot đã được cập nhật thành công!",
+    "Version": "Phiên bản",
+    "Published at": "Phát hành lúc",
+    "Published by": "Phát hành bởi",
+    "on": "lúc"
 }

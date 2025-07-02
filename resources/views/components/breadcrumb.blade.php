@@ -25,7 +25,7 @@
 
     <div class="btn-group">
         @if ($backUrl ?? url()->previous())
-            <a href="{{ $backUrl ?? url()->previous() }}" class="btn btn-outline-secondary btn-sm">
+            <a href="{{ $backUrl ?? url()->previous() }}" class="btn btn-secondary btn-sm">
                 <i class="bi bi-arrow-left"></i> {{ __('Back') }}
             </a>
         @endif

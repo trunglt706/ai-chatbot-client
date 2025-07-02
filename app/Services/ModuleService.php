@@ -17,14 +17,15 @@ class ModuleService
     public const STATUS_PAUSED = 3;
     public const STATUS_DISCONTINUED = 4;
 
-    public static function getStatus(): array
+    public static function getStatus($status = '')
     {
-        return [
+        $status_arr = [
             self::STATUS_DEVELOPING => __('Developing'),
             self::STATUS_PUBLISHED => __('Published'),
             self::STATUS_PAUSED => __('Pause'),
             self::STATUS_DISCONTINUED => __('Discontinued'),
         ];
+        return !empty($status) ? ($status_arr[$status] ?? __('Unknown')) : $status_arr;
     }
 
     /**

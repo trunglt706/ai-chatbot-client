@@ -365,13 +365,13 @@
             .getElementById("mini-chatbot-send-button")
             .addEventListener("click", sendMessage);
 
-        // Sự kiện kéo thả cho #mini-chatbot-toggle-button
-        chatboxToggleButton.addEventListener("mousedown", startDragging);
-        // 👉 Thêm sự kiện kéo cho khung chat (wrapper)
-        chatboxWrapper.addEventListener("mousedown", startDragging);
+        // // Sự kiện kéo thả cho #mini-chatbot-toggle-button
+        // chatboxToggleButton.addEventListener("mousedown", startDragging);
+        // // 👉 Thêm sự kiện kéo cho khung chat (wrapper)
+        // chatboxWrapper.addEventListener("mousedown", startDragging);
 
-        document.addEventListener("mousemove", doDragging);
-        document.addEventListener("mouseup", stopDragging);
+        // document.addEventListener("mousemove", doDragging);
+        // document.addEventListener("mouseup", stopDragging);
     }
 
     function toggleChatbox() {

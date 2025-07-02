@@ -30,13 +30,13 @@
                         <table class="table align-middle table-hover text-nowrap">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                    <th scope="col" class="text-start text-uppercase small fw-bold">
                                         @lang('Name')
                                     </th>
-                                    <th scope="col" width="10%" class="text-start text-uppercase small fw-bold">
+                                    <th scope="col" class="text-start text-uppercase small fw-bold">
                                         @lang('Permissions')
                                     </th>
-                                    <th scope="col" class="text-center text-uppercase small fw-bold">
+                                    <th scope="col" width="10%" class="text-center text-uppercase small fw-bold">
                                         @lang('Actions')
                                     </th>
                                 </tr>

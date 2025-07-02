@@ -50,7 +50,7 @@ class HomeController extends Controller
         $totalMessages = ChatBotMessage::whereUserId($userId)->count();
 
         // Lấy tin nhắn
-        $messages = ChatBotMessage::whereUserId($userId)
+        $messages = ChatBotMessage::whereUserId($userId)->whereId(0)
             ->orderBy('created_at', 'desc')
             ->skip($offset)
             ->take($perPage)
@@ -109,7 +109,7 @@ class HomeController extends Controller
         if (empty($message)) {
             return response()->stream(function () {
                 echo "retry: 1000\n";
-                echo "data: <span class='text-danger'>Tin nhắn không được rỗng.</span>\n\n";
+                echo "data: <span class=''>Xin chào, tôi có thể giúp gì cho bạn!</span>\n\n";
                 echo "data: [DONE]\n\n";
                 ob_flush();
                 flush();

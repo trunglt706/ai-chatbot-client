@@ -83,8 +83,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('request-forms', RequestFormController::class);
 
     // Routes cho bài viết
-    Route::get('posts/{slug}', [PostController::class, 'show'])->name('posts.show');
     Route::resource('posts', PostController::class);
+    Route::get('posts/{slug}', [PostController::class, 'show'])->name('posts.show');
 
     // Routes đọc thông báo
     Route::prefix('notifications')->group(function () {
@@ -109,6 +109,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/test-broadcast', [SystemController::class, 'testBroadcast'])->name('system.test_broadcast');
         Route::post('/test-email', [SystemController::class, 'testEmail'])->name('system.test_email');
         Route::post('/test-slack', [SystemController::class, 'testSlack'])->name('system.test_slack');
+        Route::post('/create_storage_link', [SystemController::class, 'createStorageLink'])->name('system.create_storage_link');
     });
 
     // Routes cho Quản lý Nhà tài trợ

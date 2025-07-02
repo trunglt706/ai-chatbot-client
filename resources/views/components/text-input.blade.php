@@ -24,8 +24,7 @@
                 'class' => 'form-control ' . $errorClass,
             ]) }}>
 
-        <button class="btn btn-outline-secondary toggle-password" type="button"
-            data-target="{{ $attributes->get('id') }}">
+        <button class="btn btn-secondary toggle-password" type="button" data-target="{{ $attributes->get('id') }}">
             <i class="bi bi-eye"></i>
         </button>
     </div>

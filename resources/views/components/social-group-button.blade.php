@@ -11,7 +11,7 @@
         <div class="row mt-4 text-center">
             <div class="col-md-6 mb-2">
                 <a href="{{ route('socialite.redirect', ['provider' => 'google']) }}"
-                    class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center">
+                    class="btn btn-secondary w-100 d-flex align-items-center justify-content-center">
                     <img src="https://www.google.com/favicon.ico" alt="Google" class="me-2"
                         style="width: 20px; height: 20px;">
                     {{ __('Google') }}

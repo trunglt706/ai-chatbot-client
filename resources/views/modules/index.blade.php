@@ -1,3 +1,7 @@
+@php
+    use App\Services\ModuleService;
+    $ModuleService = new ModuleService();
+@endphp
 <x-app-layout>
     <x-slot name="header">
         <x-breadcrumb :items="[['name' => 'Modules']]" />
@@ -10,6 +14,9 @@
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
                 @forelse ($modules as $module)
+                    @php
+                        $status = $ModuleService->getStatus($module->status);
+                    @endphp
                     <div class="col">
                         <div class="card h-100 shadow-sm">
                             <div class="card-header bg-light">
@@ -22,10 +29,7 @@
                                 </p>
                                 <p class="card-text mb-2">
                                     <strong>{{ __('messages.status') }}:</strong>
-                                    <span
-                                        class="badge rounded-pill {{ $module->is_active ? 'bg-success' : 'bg-danger' }}">
-                                        {{ $module->is_active ? __('messages.active') : __('messages.inactive') }}
-                                    </span>
+                                    {{ $status }}
                                 </p>
                                 <p class="card-text mb-2">
                                     <strong>{{ __('Publish At') }}:</strong>
