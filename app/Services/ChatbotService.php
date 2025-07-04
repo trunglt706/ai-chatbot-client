@@ -20,8 +20,8 @@ class ChatbotService
      */
     public function __construct()
     {
-        $this->serviceUrl = env('CHATBOT_SERVICE_URL', '');
-        $this->serviceKey = env('CHATBOT_SERVICE_KEY', '');
+        $this->serviceUrl = 'http://103.162.30.171:8000/api';
+        $this->serviceKey = 'trunglt706key';
         $this->userQuotaLimit = (int) (ChatbotSetting::where('key', 'token_limit')->value('value') ?? env('CHATBOT_DEFAULT_QUOTA', 20));
     }
 
@@ -302,8 +302,7 @@ class ChatbotService
                 'SERVICE-KEY' => $this->serviceKey,
             ])->post($endpoint, [
                 'question' => $userMessage,
-                // 'model' => $model,
-                'type' => $type,
+                'type' => 'train',
             ]);
 
             if ($response->successful()) {

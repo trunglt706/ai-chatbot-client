@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chatbot\ChatbotSetting;
 use App\Models\Module;
 use App\Models\Post;
 use App\Models\Sponsor;
 use App\Services\ModuleService;
+use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class HomeController extends Controller
 {
@@ -70,5 +73,21 @@ class HomeController extends Controller
                 'chatbot_error_body' => $response->body() // Get the raw body for more details
             ], $response->status()); // Return the same status code as the chatbot if applicable
         }
+    }
+
+    public function recommend(Request $request)
+    {
+        $userInput = $request->input('question');
+        $knowledge = ChatbotSetting::where('key', 'subject_content')->first()->value ?? '';
+        $answer = OpenAI::chat()->create([
+            'model' => 'gpt-4-turbo',
+            'messages' => [
+                ['role' => 'system', 'content' => "Dưới đây là thông tin tài liệu bạn phải dựa vào để trả lời:\n\n" . $knowledge],
+                ['role' => 'user', 'content' => $userInput],
+            ],
+        ]);
+        return response()->json([
+            'message' => $answer->choices[0]->message->content,
+        ]);
     }
 }
