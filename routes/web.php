@@ -130,6 +130,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     require __DIR__ . '/chatbot.php';
+    require __DIR__ . '/face.php';
 });
 
 require __DIR__ . '/auth.php';

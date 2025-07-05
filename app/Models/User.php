@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\UserBlocked;
+use App\Models\Face\FaceAttendance;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,10 +14,12 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable  implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
-    use HasFactory, Notifiable, HasRoles, LogsActivity, TwoFactorAuthenticatable;
+    use HasFactory, Notifiable, HasRoles, LogsActivity, TwoFactorAuthenticatable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -139,5 +142,20 @@ class User extends Authenticatable  implements MustVerifyEmail
         }
 
         return $query;
+    }
+
+    // Định nghĩa mối quan hệ với bảng face_attendances
+    public function faceAttendances()
+    {
+        return $this->hasMany(FaceAttendance::class);
+    }
+
+    // Tùy chọn: Định nghĩa collection media cho ảnh đại diện/khuôn mặt chính
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->singleFile(); // Nếu mỗi user chỉ có 1 ảnh avatar
+        // Thêm collection cho ảnh chấm công nếu muốn quản lý qua User model
+        // Tuy nhiên, việc gắn ảnh trực tiếp vào FaceAttendance model là hợp lý hơn cho ảnh chấm công
     }
 }

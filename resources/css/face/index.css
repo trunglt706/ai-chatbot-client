@@ -1,0 +1,39 @@
+.App {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block; /* Quan trọng để canvas nằm trên ảnh */
+    margin-top: 20px;
+    max-width: 800px; /* Giới hạn chiều rộng của ảnh */
+}
+
+.image-container img {
+    display: block; /* Loại bỏ khoảng trắng dưới ảnh */
+    width: 100%;
+    height: auto;
+}
+
+.face-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+/* Styles cho Toastr content */
+.toastr-content p {
+    margin: 2px 0;
+    font-size: 0.9rem;
+}
+.toastr-content strong {
+    font-weight: bold;
+    color: #333; /* Hoặc màu sắc nổi bật hơn */
+}
